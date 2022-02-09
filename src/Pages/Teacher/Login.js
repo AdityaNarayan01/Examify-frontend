@@ -11,7 +11,7 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import Logo from '../../components/Logo';
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
-
+import Navbar from '../../components/navbar/Navbar';
 
 
 
@@ -88,6 +88,7 @@ export default function Login() {
 
   	return (
     	<RootStyle title="Student Login">
+			<Navbar />
 		<HeaderStyle>
       			<RouterLink to="/"><Logo /></RouterLink>
       			<MHidden width="smDown">
