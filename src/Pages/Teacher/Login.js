@@ -11,51 +11,51 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import Logo from '../../components/Logo';
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
-import Navbar from '../../components/navbar/Navbar';
+
 
 
 
 const HeaderStyle = styled('header')(({ theme }) => ({
-  top: 0,
-  zIndex: 9,
-  lineHeight: 0,
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  position: 'absolute',
-  padding: theme.spacing(3),
-  justifyContent: 'space-between',
-  [theme.breakpoints.up('md')]: {
-    alignItems: 'flex-start',
-    padding: theme.spacing(7, 5, 0, 7)
-  }
+	top: 0,
+	zIndex: 9,
+	lineHeight: 0,
+	width: '100%',
+	display: 'flex',
+	alignItems: 'center',
+	position: 'absolute',
+	padding: theme.spacing(3),
+	justifyContent: 'space-between',
+	[theme.breakpoints.up('md')]: {
+		alignItems: 'flex-start',
+		padding: theme.spacing(7, 5, 0, 7)
+	}
 }));
 
 
 
 const RootStyle = styled(Page)(({ theme }) => ({
-  [theme.breakpoints.up('md')]: {
-    display: 'flex'
-  }
+	[theme.breakpoints.up('md')]: {
+		display: 'flex'
+	}
 }));
 
 const SectionStyle = styled(Card)(({ theme }) => ({
-  width: '100%',
-  maxWidth: 464,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
+	width: '100%',
+	maxWidth: 464,
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	margin: theme.spacing(2, 0, 2, 2)
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
-  maxWidth: 480,
-  margin: 'auto',
-  display: 'flex',
-  minHeight: '100vh',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  padding: theme.spacing(12, 0)
+	maxWidth: 480,
+	margin: 'auto',
+	display: 'flex',
+	minHeight: '100vh',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	padding: theme.spacing(12, 0)
 }));
 
 
@@ -64,62 +64,59 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Login() {
 	const navigate = useNavigate();
-  	const [showPassword, setShowPassword] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
-  	const LoginSchema = Yup.object().shape({
-    		email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    		password: Yup.string().required('Password is required')
-  	});
+	const LoginSchema = Yup.object().shape({
+		email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+		password: Yup.string().required('Password is required')
+	});
 
-  	const formik = useFormik({
-    		initialValues: {email: '',password: '',remember: true},
-    		validationSchema: LoginSchema,
-    		onSubmit: async(values) => {
-				console.log(values)
-      			navigate('/dashboard', { replace: true });
-    		}
-  	});
+	const formik = useFormik({
+		initialValues: {email: '',password: '',remember: true},
+		validationSchema: LoginSchema,
+		onSubmit: async(values) => {
+			console.log(values)
+			navigate('/dashboard', { replace: true });
+		}
+	});
 
-  	const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+	const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
-  	const handleShowPassword = () => {
-    		setShowPassword((show) => !show);
-  	};
+	const handleShowPassword = () => {
+		setShowPassword((show) => !show);
+	};
 
-  	return (
-    	<RootStyle title="Student Login">
-			<Navbar />
+	return (
+		<RootStyle title="Student Login">
+
 		<HeaderStyle>
-      			<RouterLink to="/"><Logo /></RouterLink>
-      			<MHidden width="smDown">
-        			<Typography variant="body2" sx={{mt: { md: -2 }}}>
-          				Don’t have an account? &nbsp;
-        				<Link underline="none" variant="subtitle2" component={RouterLink} to="/register">Get started</Link>
-        			</Typography>
-      			</MHidden>
-    		</HeaderStyle>
+			<RouterLink to="/"><Logo /></RouterLink>
+			<MHidden width="smDown">
+				<Typography variant="body2" sx={{mt: { md: -2 }}}>
+					Don’t have an account? &nbsp;
+					<Link underline="none" variant="subtitle2" component={RouterLink} to="/register">Get started</Link>
+				</Typography>
+			</MHidden>
+		</HeaderStyle>
 
-  
+		<MHidden width="mdDown">
+			<SectionStyle>
+				<Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>Hi, Welcome Back</Typography>
+				<img src="/static/illustrations/illustration_login.png" alt="login" />
+			</SectionStyle>
+		</MHidden>
 
-      		<MHidden width="mdDown">
-        		<SectionStyle>
-          		<Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>Hi, Welcome Back</Typography>
-          		<img src="/static/illustrations/illustration_login.png" alt="login" />
-        		</SectionStyle>
-      		</MHidden>
+		<Container maxWidth="sm">
+			<ContentStyle>
+				<Stack sx={{ mb: 5 }}>
+					<Typography variant="h4" gutterBottom>Login In Examify</Typography>
+					<Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+				</Stack>
 
-      		<Container maxWidth="sm">
-        		<ContentStyle>
-          			<Stack sx={{ mb: 5 }}>
-            				<Typography variant="h4" gutterBottom>Login In Examify</Typography>
-            				<Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
-          			</Stack>
-
-          			<FormikProvider value={formik}>
-      					<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        				<Stack spacing={3}>
-
-          				<TextField
+				<FormikProvider value={formik}>
+					<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+						<Stack spacing={3}>
+							<TextField
             				fullWidth
             				autoComplete="username"
             				type="email"

@@ -1,6 +1,6 @@
 
 import { Form, FormikProvider, useFormik } from 'formik';
-import {Box,Card,Checkbox,CardHeader,Typography,FormControlLabel,Stack} from '@mui/material';
+import {Box,Checkbox,Typography,FormControlLabel,Stack, Divider} from '@mui/material';
 
 
 const TASKS = [
@@ -12,34 +12,28 @@ const TASKS = [
 ];
 
 
-function TaskItem({ task, checked, formik, ...other }) {
+function TaskItem({ task, checked, disabled, correct, formik, ...other }) {
   const { getFieldProps } = formik;
 
   return (
     <Stack direction="row" justifyContent="space-between" sx={{ py: 0.75 }}>
+
       <FormControlLabel
-        control={
-          <Checkbox {...getFieldProps('checked')} value={task} checked={checked} {...other} />
-        }
+        control={ <Checkbox {...getFieldProps('checked')} value={task} checked={checked} disabled={disabled} {...other} /> }
+
         label={
-          <Typography
-            variant="body2"
-            sx={{
-              ...(checked && {
-                color: 'text.disabled',
-                textDecoration: 'line-through'
-              })
-            }}
-          >
+          <Typography className="noselect" variant="body2" sx={{...(correct ? checked && {color: 'green'} : checked && {color: 'red'})}}>
             {task}
           </Typography>
         }
       />
+
     </Stack>
   );
 }
 
-export default function AppTasks() {
+export default function AppTasks({disabled, correct}) {
+
   const formik = useFormik({
     initialValues: {
       checked: [TASKS[2]]
@@ -52,9 +46,10 @@ export default function AppTasks() {
   const { values, handleSubmit } = formik;
 
   return (
-    <Card>
-      <CardHeader title="Tasks" />
-      <Box sx={{ px: 3, py: 1 }}>
+      <Box sx={{ px: 3, py: 1, mt: 3 }}>
+        <Typography className="noselect" variant="h4" noWrap>
+                This is a Question
+        </Typography>
         <FormikProvider value={formik}>
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             {TASKS.map((task) => (
@@ -63,11 +58,13 @@ export default function AppTasks() {
                 task={task}
                 formik={formik}
                 checked={values.checked.includes(task)}
+                disabled={disabled}
+                correct={false}
               />
             ))}
           </Form>
         </FormikProvider>
+        <Divider />
       </Box>
-    </Card>
   );
 }

@@ -1,15 +1,16 @@
 
-import { Box, Grid, Container, Typography } from '@mui/material';
+import { Box, Grid, Container, Typography, Stack } from '@mui/material';
 import Page from '../../components/Page';
-import {AppTasks,AppNewUsers,AppBugReports,AppItemOrders,AppNewsUpdate,AppWeeklySales,AppOrderTimeline,AppTrafficBySite,} from '../../components/student/main';
-import Navbar from '../../components/navbar/Navbar';
+import { AppNewUsers,AppBugReports,AppItemOrders,AppNewsUpdate,AppWeeklySales } from '../../components/student/main';
+import Navbar from '../../components/student/navbar/Navbar';
 import faker from 'faker';
+import Scrollbar from '../../components/Scrollbar'
 
 
 export default function DashboardApp() {
-    const arr = Array.from(Array(3).keys());
+    const arr = Array.from(Array(10).keys());
 
-  return (
+return (
     <Page title="Examify | Home">
         <Navbar />
         <Container maxWidth="xl">
@@ -44,22 +45,26 @@ export default function DashboardApp() {
                         buttonText ="Start Test"
                         />
                     ))}
-                    
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={7}>
                     <Box sx={{ pt: 5, pb: 2}}>
                         <Typography variant="h4">Upcoming Test</Typography>
                     </Box>
-                    {arr.map(() => (
-                        <AppNewsUpdate 
-                        duration="240 mins" 
-                        title="Compiler Design CT1" 
-                        startAt = {faker.date.soon()}
-                        endAt = {faker.date.soon()}
-                        />
-                    ))}
-                    
+
+                    <Scrollbar>
+                    <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
+                        {arr.map(() => (
+                            <AppNewsUpdate 
+                            duration="240 mins" 
+                            title="Compiler Design CT1" 
+                            startAt = {faker.date.soon()}
+                            endAt = {faker.date.soon()}
+                            />
+                        ))} 
+                    </Stack>
+                    </Scrollbar>
+
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={6}>
