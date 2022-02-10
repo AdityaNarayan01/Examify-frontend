@@ -2,7 +2,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar} from '@mui/material';
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
-import Logo from '../Logo';
+import Logo from '../../Logo';
 import { Link as RouterLink} from 'react-router-dom';
 
 const APPBAR_MOBILE = 64;

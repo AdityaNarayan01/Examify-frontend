@@ -6,7 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
 import MenuPopover from './MenuPopover';
-import account from '../../_mocks_/account';
+import account from '../../../_mocks_/account';
 
 
 const MENU_OPTIONS = [
