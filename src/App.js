@@ -10,7 +10,7 @@ export default function App() {
   return (
     <ThemeConfig>
       <GlobalStyles />
-      <Test />
+      <Result />
     </ThemeConfig>
   );
 }

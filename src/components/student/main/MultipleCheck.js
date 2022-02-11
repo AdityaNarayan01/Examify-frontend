@@ -1,70 +1,63 @@
 
-import { Form, FormikProvider, useFormik } from 'formik';
+import React from 'react';
 import {Box,Checkbox,Typography,FormControlLabel,Stack, Divider} from '@mui/material';
 
 
-const TASKS = [
-  'Create FireStone Logo',
-  'Add SCSS and JS files if required',
-  'Stakeholder Meeting',
-  'Scoping & Estimations',
-  'Sprint Showcase'
-];
+export default function AppTasks({questionindex, title, marks, mcqQuestions, disabled, correct}) {
 
+  const [checked, setchecked] = React.useState([]);
+  
+  const onchecksubmit = (event) => {
+      const newchecked = checked;
 
-function TaskItem({ task, checked, disabled, correct, handleSubmit, formik, ...other }) {
-  const { getFieldProps } = formik;
-
-  return (
-    <Stack direction="row" justifyContent="space-between" sx={{ py: 0.75 }}>
-
-      <FormControlLabel
-        control={ <Checkbox {...getFieldProps('checked')} value={task} checked={checked} onChange={handleSubmit} disabled={disabled} {...other} /> }
-
-        label={
-          <Typography className="noselect" variant="body2" sx={{...(correct ? checked && {color: 'green'} : checked && {color: 'red'})}}>
-            {task}
-          </Typography>
+      if(checked.includes(event.target.value)){
+        const index = newchecked.indexOf(event.target.value);
+        if (index > -1) {
+          newchecked.splice(index, 1);
         }
-      />
+      }else{
+        newchecked.push(event.target.value);
+      }
 
-    </Stack>
-  );
-}
+      setchecked(prevState => ([...newchecked]));
+      console.log('Dispatched from here');
+      console.log(`QuestionIndex : ${questionindex}`);
+      console.log(`checked Array : ${newchecked}`);
+  }
 
-export default function AppTasks({disabled, correct}) {
-
-  const formik = useFormik({
-    initialValues: {
-      checked: []
-    },
-    onSubmit: (values) => {
-      console.log(values);
-    }
-  });
-
-  const { values, handleSubmit } = formik;
 
   return (
       <Box sx={{ px: 3, py: 1, mt: 3 }}>
-        <Typography className="noselect" variant="h4" noWrap>
-                This is a Question
-        </Typography>
-        <FormikProvider value={formik}>
-          <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            {TASKS.map((task) => (
-              <TaskItem
-                key={task}
-                task={task}
-                formik={formik}
-                checked={values.checked.includes(task)}
-                disabled={disabled}
-                correct={false}
-                handleSubmit={handleSubmit}
+        <Box sx={{pb:2, display: 'flex', flexDirection:'row', justifyContent: 'space-between'}}>
+            <Typography className="noselect" variant="h4" noWrap>{title}</Typography>
+            <Typography className="noselect" variant="h6" noWrap>marks:{marks}</Typography>
+        </Box>
+
+          {mcqQuestions.map((mcq, index) => (
+            <Stack direction="row" justifyContent="space-between" sx={{ py: 0.75 }}>
+
+              <FormControlLabel
+                control={ 
+                  <Checkbox
+                    value={index} 
+                    checked={checked.includes(index.toString())} 
+                    onChange={onchecksubmit} 
+                    disabled={disabled} 
+                  /> 
+                }
+
+                label={
+                  <Typography className="noselect" variant="body2" 
+                  // sx={{...(correct ? checked && {color: 'green'} : checked && {color: 'red'})}}
+                  >
+                    {mcq.mcqTitle}
+                  </Typography>
+                }
               />
-            ))}
-          </Form>
-        </FormikProvider>
+
+            </Stack>
+          ))}
+
         <Divider />
       </Box>
   );

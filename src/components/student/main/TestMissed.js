@@ -29,18 +29,13 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   )} 100%)`
 }));
 
-const TOTAL = 1;
 
-export default function TestMissed() {
+export default function TestMissed({total}) {
   return (
     <RootStyle>
-      <IconWrapperStyle>
-        <Icon icon={bugFilled} width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Test Missed
-      </Typography>
+      <IconWrapperStyle><Icon icon={bugFilled} width={24} height={24} /></IconWrapperStyle>
+      <Typography variant="h3">{fShortenNumber(total)}</Typography>
+      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>Test Missed</Typography>
     </RootStyle>
   );
 }
