@@ -2,38 +2,48 @@
 import React from 'react';
 import { Box, Grid, Container, Typography, Stack, Button } from '@mui/material';
 import Page from '../../components/Page';
-import { AppTasks } from '../../components/student/main';
+import { ResultMutipleCheck, ResultSingleCheck } from '../../components/student/main';
+import resultdata from '../../_mocks_/testSubmitted';
+import Navbar from '../../components/student/navbar/Navbar';
 
-
-export default function DashboardApp() {
-    const arr = Array.from(Array(10).keys());
-    const [title, settitle] = React.useState('Compiler Design CT1');
+export default function Result() {
+    const [result, setresult] = React.useState(resultdata);
 
     return (
-    <Page title={`Test | ${title}`}>
-
+    <Page title={`Test | ${result?.title}`}>
+        <Navbar />
         <Container maxWidth="xl" sx={{pb: 15}}>
-            <Box sx={{ pt: 15, pb: 5}}>
-                <Typography className="noselect" variant="h4">{title}</Typography>
-                <Typography className="noselect" variant="h4">Marks Obtained: 15</Typography>
-                <Typography className="noselect" variant="h4">Total Marks: 15</Typography>
+            <Box sx={{ pt: 15, pb: 5, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Typography className="noselect" variant="h4">{result?.title}</Typography>
+                    <Typography className="noselect" variant="h4">Marks: {result?.marks}/{result?.totalMarks}</Typography>
             </Box>
-
+            
             <Grid container spacing={3} sx={{pl:5, pr:5}}>
                 <Grid item xs={12} md={12} lg={12}>
-                    <Box sx={{ pt: 5, pb: 2}}>
-                        <Typography className="noselect" variant="h4">Today Test</Typography>
-                    </Box>
-                    {arr.map(() => (
-                        < AppTasks disabled={true} correct={true}/>
-                    ))}
-                </Grid>
-            </Grid>
-        
-            <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                <Button variant="contained" size="large"> Submit test </Button>
-            </Box>
 
+                    {result?.question.map((q, i) => (
+                        <Box key={i}>
+                            {!q.mcqType ? 
+                            <ResultSingleCheck
+                                questionindex={i}
+                                title={q.title}
+                                marks={q.marks}
+                                answered={q.answered}
+                                mcqQuestions= {q.mcqQuestions}
+                            /> : 
+                            
+                            <ResultMutipleCheck
+                                questionindex={i}
+                                title={q.title}
+                                marks={q.marks}
+                                answered={q.answered}
+                                mcqQuestions= {q.mcqQuestions}
+                            />}
+                        </Box>
+                    ))}
+
+                </Grid>
+        </Grid>
         </Container>
     </Page>
     );

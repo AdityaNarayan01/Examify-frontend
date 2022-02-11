@@ -1,16 +1,16 @@
 
 import { Box, Grid, Container, Typography, Stack } from '@mui/material';
 import Page from '../../components/Page';
-import { UpcomingTest,TestMissed,TestSubmiited,AppNewsUpdate,AppWeeklySales } from '../../components/student/main';
+import { UpcomingTest,TestMissed,TestSubmiited,AppNewsUpdate,TodayTest  } from '../../components/student/main';
 import Navbar from '../../components/student/navbar/Navbar';
 import faker from 'faker';
-import Scrollbar from '../../components/Scrollbar'
+// import Scrollbar from '../../components/Scrollbar'
 
 
 export default function DashboardApp() {
-    const arr = Array.from(Array(10).keys());
+    const arr = Array.from(Array(5).keys());
 
-return (
+    return (
     <Page title="Examify | Home">
         <Navbar />
         <Container maxWidth="xl">
@@ -19,18 +19,23 @@ return (
             </Box>
 
             <Grid container spacing={3}>
+
                 <Grid item xs={12} sm={6} md={3}>
-                    <AppWeeklySales />
+                    <TodayTest total={2}/>
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={3}>
-                    <UpcomingTest />
+                    <UpcomingTest total={10}/>
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={3}>
-                    <TestSubmiited />
+                    <TestSubmiited total={2}/>
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={3}>
-                <TestMissed />
-            </Grid>
+                    <TestMissed total={1}/>
+                </Grid>
+
 
                 <Grid item xs={12} md={12} lg={12}>
                     <Box sx={{ pt: 5, pb: 2}}>
@@ -42,7 +47,7 @@ return (
                         title="Compiler Design CT1" 
                         startAt = {faker.date.soon()}
                         endAt = {faker.date.soon()}
-                        buttonText ="Start Test"
+                        type='today'
                         />
                     ))}
                 </Grid>
@@ -51,19 +56,15 @@ return (
                     <Box sx={{ pt: 5, pb: 2}}>
                         <Typography variant="h4">Upcoming Test</Typography>
                     </Box>
-
-                    <Scrollbar>
-                    <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
                         {arr.map(() => (
                             <AppNewsUpdate 
                             duration="240 mins" 
                             title="Compiler Design CT1" 
                             startAt = {faker.date.soon()}
                             endAt = {faker.date.soon()}
+                            
                             />
                         ))} 
-                    </Stack>
-                    </Scrollbar>
 
                 </Grid>
 
@@ -77,7 +78,7 @@ return (
                         title="Compiler Design CT1" 
                         startAt = {faker.date.soon()}
                         endAt = {faker.date.soon()}
-                        buttonText ="Start Test"
+                        type='submitted'
                         />
                     ))}
                     

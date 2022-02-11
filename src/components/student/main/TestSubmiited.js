@@ -31,16 +31,12 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 const TOTAL = 2000;
 
-export default function TestSubmiited() {
+export default function TestSubmiited({total}) {
   return (
     <RootStyle>
-      <IconWrapperStyle>
-        <Icon icon={windowsFilled} width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Test Submitted
-      </Typography>
+      <IconWrapperStyle><Icon icon={windowsFilled} width={24} height={24} /></IconWrapperStyle>
+      <Typography variant="h3">{fShortenNumber(total)}</Typography>
+      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>Test Submitted</Typography>
     </RootStyle>
   );
 }

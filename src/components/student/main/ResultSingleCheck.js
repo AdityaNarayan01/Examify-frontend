@@ -3,19 +3,9 @@ import React from 'react';
 import {Box,Typography,FormControlLabel, Divider, RadioGroup, Radio} from '@mui/material';
 
 
-export default function AppTasks({questionindex, title, marks, mcqQuestions,  disabled, correct}) {
+export default function AppTasks({title, marks, answered, mcqQuestions, dataQuestions,  disabled, correct}) {
 
-    const [checked, setchecked] = React.useState(-1);
-
-    const oncheckSubmit = (event) => {
-        const prevcheck = checked;
-        setchecked(event.target.value);
-        console.log(`Dispatch Action from here`);
-        console.log(`question index : ${questionindex}`)
-        console.log(`prevcheck:${prevcheck}`)
-        console.log(`nowchcek: ${event.target.value}`)
-    }
-
+    const [checked, setchecked] = React.useState(answered);
 
     return (
         <Box sx={{ px: 3, py: 1, mt: 3 }}>
@@ -29,11 +19,19 @@ export default function AppTasks({questionindex, title, marks, mcqQuestions,  di
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="checked"
                 value={checked}
-                onChange={oncheckSubmit}
-                disabled={disabled}
             >
                 {mcqQuestions?.map((mcq, index) => (
-                    <FormControlLabel key={index} value={index} control={<Radio />} label={mcq.mcqTitle} />
+                    <FormControlLabel key={index} value={index} control={<Radio />} 
+                    
+                    label={
+                        <Typography className="noselect" variant="body2" 
+                                sx={{...(index == answered && ( mcq.answer ? { color: 'green' } : {color: 'red'} ))}}
+                        >
+                            {mcq.mcqTitle}
+                        </Typography>
+                        } 
+                    disabled={true}
+                    />
                 ))}
             </RadioGroup>
 

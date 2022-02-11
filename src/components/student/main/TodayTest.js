@@ -32,16 +32,12 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 const TOTAL = 2;
 
-export default function TodayTest() {
+export default function TodayTest({total}) {
   return (
     <RootStyle>
-      <IconWrapperStyle>
-        <Icon icon={androidFilled} width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Today Test
-      </Typography>
+      <IconWrapperStyle><Icon icon={androidFilled} width={24} height={24} /></IconWrapperStyle>
+      <Typography variant="h3">{fShortenNumber(total)}</Typography>
+      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>Today Test</Typography>
     </RootStyle>
   );
 }
