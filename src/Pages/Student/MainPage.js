@@ -1,7 +1,7 @@
 
 import { Box, Grid, Container, Typography, Stack } from '@mui/material';
 import Page from '../../components/Page';
-import { AppNewUsers,AppBugReports,AppItemOrders,AppNewsUpdate,AppWeeklySales } from '../../components/student/main';
+import { UpcomingTest,TestMissed,TestSubmiited,AppNewsUpdate,AppWeeklySales } from '../../components/student/main';
 import Navbar from '../../components/student/navbar/Navbar';
 import faker from 'faker';
 import Scrollbar from '../../components/Scrollbar'
@@ -23,13 +23,13 @@ return (
                     <AppWeeklySales />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <AppNewUsers />
+                    <UpcomingTest />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <AppItemOrders />
+                    <TestSubmiited />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                <AppBugReports />
+                <TestMissed />
             </Grid>
 
                 <Grid item xs={12} md={12} lg={12}>

@@ -12,14 +12,14 @@ const TASKS = [
 ];
 
 
-function TaskItem({ task, checked, disabled, correct, formik, ...other }) {
+function TaskItem({ task, checked, disabled, correct, handleSubmit, formik, ...other }) {
   const { getFieldProps } = formik;
 
   return (
     <Stack direction="row" justifyContent="space-between" sx={{ py: 0.75 }}>
 
       <FormControlLabel
-        control={ <Checkbox {...getFieldProps('checked')} value={task} checked={checked} disabled={disabled} {...other} /> }
+        control={ <Checkbox {...getFieldProps('checked')} value={task} checked={checked} onChange={handleSubmit} disabled={disabled} {...other} /> }
 
         label={
           <Typography className="noselect" variant="body2" sx={{...(correct ? checked && {color: 'green'} : checked && {color: 'red'})}}>
@@ -36,7 +36,7 @@ export default function AppTasks({disabled, correct}) {
 
   const formik = useFormik({
     initialValues: {
-      checked: [TASKS[2]]
+      checked: []
     },
     onSubmit: (values) => {
       console.log(values);
@@ -60,6 +60,7 @@ export default function AppTasks({disabled, correct}) {
                 checked={values.checked.includes(task)}
                 disabled={disabled}
                 correct={false}
+                handleSubmit={handleSubmit}
               />
             ))}
           </Form>

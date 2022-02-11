@@ -2,7 +2,7 @@
 import React from 'react';
 import { Box, Grid, Container, Typography, Stack, Button } from '@mui/material';
 import Page from '../../components/Page';
-import { AppTasks } from '../../components/student/main';
+import { AppTasks, SingleCheck } from '../../components/student/main';
 
 
 export default function DashboardApp() {
@@ -44,8 +44,17 @@ return (
                 <Typography className="noselect" variant="h4">Time Remaining : {timeRemaining - time}</Typography>
                 </Box>
             </Box>
-
+            
             <Grid container spacing={3} sx={{pl:5, pr:5}}>
+                <Grid item xs={12} md={12} lg={12}>
+                    <Box sx={{ pt: 5, pb: 2}}>
+                        <Typography className="noselect" variant="h4">Today Test</Typography>
+                    </Box>
+                    {arr.map(() => (
+                        <SingleCheck disabled={false}/>
+                    ))}
+                </Grid>
+
                 <Grid item xs={12} md={12} lg={12}>
                     <Box sx={{ pt: 5, pb: 2}}>
                         <Typography className="noselect" variant="h4">Today Test</Typography>
