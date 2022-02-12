@@ -117,69 +117,60 @@ export default function Login() {
 					<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
 						<Stack spacing={3}>
 							<TextField
-            				fullWidth
-            				autoComplete="username"
-            				type="email"
-            				label="Email address"
-            				{...getFieldProps('email')}
+							fullWidth
+							autoComplete="username"
+							type="email"
+							label="Email address"
+							{...getFieldProps('email')}
 							name="email"
-            				error={Boolean(touched.email && errors.email)}
-            				helperText={touched.email && errors.email}
-          				/>
+							error={Boolean(touched.email && errors.email)}
+							helperText={touched.email && errors.email}
+							/>
 
-          				<TextField
-            				fullWidth
-            				autoComplete="current-password"
-            				type={showPassword ? 'text' : 'password'}
-            				label="Password"
-            				{...getFieldProps('password')}
-            				InputProps={{
-              					endAdornment: (
-                				<InputAdornment position="end">
-                  				<IconButton onClick={handleShowPassword} edge="end">
-                    					<Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  				</IconButton>
-                				</InputAdornment>
-              					)
-            				}}
-            
-            				error={Boolean(touched.password && errors.password)}
-            				helperText={touched.password && errors.password}
-          			/>
+							<TextField
+							fullWidth
+							autoComplete="current-password"
+							type={showPassword ? 'text' : 'password'}
+							label="Password"
+							{...getFieldProps('password')}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="end">
+									<IconButton onClick={handleShowPassword} edge="end">
+									<Icon icon={showPassword ? eyeFill : eyeOffFill} />
+									</IconButton>
+									</InputAdornment>
+								)
+							}}
+							error={Boolean(touched.password && errors.password)}
+							helperText={touched.password && errors.password}
+						/>
+					</Stack>
+
+					<Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+						<FormControlLabel
+							control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
+							label="Remember me"
+						/>
+						<Link component={RouterLink} variant="subtitle2" to="/forgot">Forgot password?</Link>
+					</Stack>
+
+					<LoadingButton  fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>Login</LoadingButton>
+				</Form>
+			</FormikProvider>
+
+			<MHidden width="smUp">
+				<Typography variant="body2" align="center" sx={{ mt: 3 }}>
+					Don’t have an account?&nbsp;
+					<Link variant="subtitle2" component={RouterLink} to="register">
+						Get started
+					</Link>
+				</Typography>
+
+			</MHidden>
 			
-        			</Stack>
-        				<Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          
-          				<FormControlLabel
-            				control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            				label="Remember me"
-          				/>
-
-          				<Link component={RouterLink} variant="subtitle2" to="#">
-            					Forgot password?
-          				</Link>
-
-        			</Stack>
-
-        			<LoadingButton  fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-          				Login
-        			</LoadingButton>
-
-      				</Form>
-    			</FormikProvider>
-
-          			<MHidden width="smUp">
-	
-            				<Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              					Don’t have an account?&nbsp;
-              					<Link variant="subtitle2" component={RouterLink} to="register">
-                					Get started
-              					</Link>
-            				</Typography>
-
-          			</MHidden>
-        		</ContentStyle>
-      		</Container>
+			</ContentStyle>
+		</Container>
     </RootStyle>
-  );
+	);
 }

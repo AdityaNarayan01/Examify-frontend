@@ -81,169 +81,162 @@ export default function Register() {
 	const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 	
 	return (
-    <RootStyle title="Student Register">
+	<RootStyle title="Student Register">
 	
 		<HeaderStyle>
 			<RouterLink to="/"><Logo /></RouterLink>
-      		<MHidden width="smDown">
-        		<Typography variant="body2" sx={{mt: { md: -2 }}}>
-          			Already have an account? &nbsp;
-        			<Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-          				Login
-        			</Link>
-        		</Typography>
-      		</MHidden>
-    	</HeaderStyle>
+			<MHidden width="smDown">
+				<Typography variant="body2" sx={{mt: { md: -2 }}}>
+					Already have an account? &nbsp;
+					<Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+					Login
+					</Link>
+				</Typography>
+			</MHidden>
+		</HeaderStyle>
 
-      <MHidden width="mdDown">
-        <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Student Registeration
-          </Typography>
-          <img alt="register" src="/static/illustrations/illustration_register.png" />
-        </SectionStyle>
-      </MHidden>
 
-      <Container>
-        <ContentStyle>
-          <Box sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              Student Registeration
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Register to Examify
-            </Typography>
-          </Box>
+		<MHidden width="mdDown">
+			<SectionStyle>
+				<Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+					Student Registeration
+				</Typography>
+				<img alt="register" src="/static/illustrations/illustration_register.png" />
+			</SectionStyle>
+		</MHidden>
 
-           <FormikProvider value={formik}>
-      		<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        	<Stack spacing={3}>
-          		<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            		<TextField
-              		fullWidth
-              		label="First name"
-              		{...getFieldProps('firstName')}
-              		error={Boolean(touched.firstName && errors.firstName)}
-              		helperText={touched.firstName && errors.firstName}
-            		/>
+		<Container>
+			<ContentStyle>
+				<Box sx={{ mb: 5 }}>
+					<Typography variant="h4" gutterBottom>Student Registeration</Typography>
+					<Typography sx={{ color: 'text.secondary' }}>Register to Examify</Typography>
+				</Box>
 
-            		<TextField
-              		fullWidth
-              		label="Last name"
-              		{...getFieldProps('lastName')}
-              		error={Boolean(touched.lastName && errors.lastName)}
-              		helperText={touched.lastName && errors.lastName}
-            		/>
-          		</Stack>
+			<FormikProvider value={formik}>
+				<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+					<Stack spacing={3}>
 
-          		<TextField
-            		fullWidth
-            		autoComplete="username"
-            		type="email"
-            		label="Email address"
-            		{...getFieldProps('email')}
-            		error={Boolean(touched.email && errors.email)}
-            		helperText={touched.email && errors.email}
-          		/>
+						<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+							<TextField
+							fullWidth
+							label="First name"
+							{...getFieldProps('firstName')}
+							error={Boolean(touched.firstName && errors.firstName)}
+							helperText={touched.firstName && errors.firstName}
+							/>
 
-          		<TextField
-            		fullWidth
-            		autoComplete="current-password"
-            		type={showPassword ? 'text' : 'password'}
-            		label="Password"
-            		{...getFieldProps('password')}
-            		InputProps={{
-              		endAdornment: (
-                	<InputAdornment position="end">
-                  		<IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    		<Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  		</IconButton>
-                	</InputAdornment>
-              		)
-            		}}
-            		error={Boolean(touched.password && errors.password)}
-            		helperText={touched.password && errors.password}
-          		/>
+							<TextField
+							fullWidth
+							label="Last name"
+							{...getFieldProps('lastName')}
+							error={Boolean(touched.lastName && errors.lastName)}
+							helperText={touched.lastName && errors.lastName}
+							/>
+						</Stack>
 
-				<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+						<TextField
+						fullWidth
+						autoComplete="username"
+						type="email"
+						label="Email address"
+						{...getFieldProps('email')}
+						error={Boolean(touched.email && errors.email)}
+						helperText={touched.email && errors.email}
+						/>
+						
+						<TextField
+						fullWidth
+						autoComplete="current-password"
+						type={showPassword ? 'text' : 'password'}
+						label="Password"
+						{...getFieldProps('password')}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+								<IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+								<Icon icon={showPassword ? eyeFill : eyeOffFill} />
+								</IconButton>
+								</InputAdornment>
+							)
+						}}
+						error={Boolean(touched.password && errors.password)}
+						helperText={touched.password && errors.password}
+						/>
+
+					<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
 					
-				 	<FormControl fullWidth variant="standard" >
-				 		<InputLabel id="demo-simple-select-helper-label">Branch</InputLabel>
-        				<Select
-				  			fullWidth
-            				type="branch"
-            				label="Branch"
-            				{...getFieldProps('branch')}
-            				error={Boolean(touched.branch && errors.branch)}
-            				helperText={touched.branch && errors.branch}
-        				>
-          					<MenuItem value="">
-            						<em>None</em>
-          					</MenuItem>
-          					<MenuItem value={'Computer Science'}>Ten</MenuItem>
-          					<MenuItem value={'Electornics '}>Twenty</MenuItem>
-          					<MenuItem value={'EEE'}>Thirty</MenuItem>
-        				</Select>
+					<FormControl fullWidth variant="standard" >
+						<InputLabel id="demo-simple-select-helper-label">Branch</InputLabel>
+						<Select
+						fullWidth
+						type="branch"
+						label="Branch"
+						{...getFieldProps('branch')}
+						error={Boolean(touched.branch && errors.branch)}
+						helperText={touched.branch && errors.branch}
+						>
+							<MenuItem value=""><em>None</em></MenuItem>
+							<MenuItem value={'Computer Science'}>CSE</MenuItem>
+							<MenuItem value={'Electornics '}>ECE</MenuItem>
+							<MenuItem value={'EEE'}>EEE</MenuItem>
+						</Select>
 					</FormControl>
 					
-
-					
-				 	<FormControl fullWidth variant="standard">
-				 		<InputLabel id="demo-simple-select-helper-label">Section</InputLabel>
-        				<Select
-				  			fullWidth
-            				type="branch"
-            				label="Branch"
-            				{...getFieldProps('section')}
-            				error={Boolean(touched.section && errors.section)}
-            				helperText={touched.section && errors.section}
-        				>
-          					<MenuItem value="">
-            						<em>None</em>
-          					</MenuItem>
-          					<MenuItem value={1}>1</MenuItem>
-          					<MenuItem value={2}>2</MenuItem>
-          					<MenuItem value={3}>3</MenuItem>
-        				</Select>
+					<FormControl fullWidth variant="standard">
+						<InputLabel id="demo-simple-select-helper-label">Section</InputLabel>
+						<Select
+						fullWidth
+						type="branch"
+						label="Branch"
+						{...getFieldProps('section')}
+						error={Boolean(touched.section && errors.section)}
+						helperText={touched.section && errors.section}
+						>
+							<MenuItem value=""><em>None</em></MenuItem>
+							<MenuItem value={1}>1</MenuItem>
+							<MenuItem value={2}>2</MenuItem>
+							<MenuItem value={3}>3</MenuItem>
+						</Select>
 					</FormControl>
-					
+
+					</Stack>
+				
+					<LoadingButton
+					fullWidth
+					size="large"
+					type="submit"
+					variant="contained"
+					loading={isSubmitting}
+					>
+						Register
+					</LoadingButton>
+
 				</Stack>
+			</Form>
+		</FormikProvider>
 
-          		<LoadingButton
-            		fullWidth
-            		size="large"
-            		type="submit"
-            		variant="contained"
-            		loading={isSubmitting}
-          		>
-            		Register
-          		</LoadingButton>
-        	</Stack>
-      		</Form>
-    	</FormikProvider>
+		<Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+			By registering, I agree to Minimal&nbsp;
+			<Link underline="always" sx={{ color: 'text.primary' }}>
+				Terms of Service
+			</Link>
+			&nbsp;and&nbsp;
+			<Link underline="always" sx={{ color: 'text.primary' }}>
+				Privacy Policy
+			</Link>.
+		</Typography>
 
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
-            </Link>
-            &nbsp;and&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
-            </Link>
-            .
-          </Typography>
+		<MHidden width="smUp">
+			<Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
+				Already have an account?&nbsp;
+				<Link to="/login" component={RouterLink}>
+					Login
+				</Link>	
+			</Typography>
+		</MHidden>
 
-          <MHidden width="smUp">
-            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
-              <Link to="/login" component={RouterLink}>
-                Login
-              </Link>
-            </Typography>
-          </MHidden>
-        </ContentStyle>
-      </Container>
-    </RootStyle>
+    </ContentStyle>
+    </Container>
+   </RootStyle>
   );
 }
