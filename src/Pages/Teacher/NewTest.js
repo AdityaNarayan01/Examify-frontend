@@ -416,7 +416,8 @@ export default function NewTest() {
 const branch=[
    "CSE",
    "MECH",
-   "ESE"
+   "ESE",
+   "IT"
 ]
 
 const section=[

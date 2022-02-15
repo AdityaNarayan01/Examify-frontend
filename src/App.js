@@ -6,12 +6,14 @@ import Main from './Pages/Student/MainPage';
 import Test from './Pages/Student/Test';
 import Result from './Pages/Student/Result';
 import NewTest from './Pages/Teacher/NewTest';
+import ViewResult from './Pages/Teacher/Result';
+
 
 export default function App() {
   return (
     <ThemeConfig>
       <GlobalStyles />
-      <NewTest />
+      <ViewResult/>
     </ThemeConfig>
   );
 }
