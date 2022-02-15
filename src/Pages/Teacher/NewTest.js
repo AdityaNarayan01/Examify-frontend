@@ -272,44 +272,46 @@ export default function NewTest() {
                                     </Grid>
                                 </Grid>
 
-                                <Grid container spacing={1} sx={{ mt: 2 }}>
+                                <Grid container spacing={2} sx={{ mt: 2 }}>
                                     <Grid item xs={12} md={2}>
-                                        <Grid container spacing={1}>
+                                        <Grid container spacing={2} >
 
-                                            <Grid item xs={8} md={12}>
-                                                <Button variant="contained" size="medium" onClick={e => handleAddOption(e, i)}>Add Option</Button>
+                                            <Grid item xs={6} sm={4} md={12}>
+                                                <FormControl sx={{width:120}}>
+                                                    <InputLabel id="demo-simple-select-label">MCQ type</InputLabel>
+                                                        <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        value={q.mcqType}
+                                                        label="MCQ Type"
+                                                        size = "small"
+                                                        onChange={(e) =>  mcqTypeChange(e, i)}
+                                                        >
+                                                            <MenuItem value='single'>Single</MenuItem>
+                                                            <MenuItem value='multiple'>Multiple</MenuItem>
+                                                        </Select>
+                                                </FormControl>
                                             </Grid>
 
-                                            <Grid item xs={4} md={12}>
-                                            <FormControl fullWidth>
-                                                <InputLabel id="demo-simple-select-label">MCQ type</InputLabel>
-                                                    <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    value={q.mcqType}
-                                                    label="MCQ Type"
-                                                    onChange={(e) =>  mcqTypeChange(e, i)}
-                                                    >
-                                                        <MenuItem value='single'>Single</MenuItem>
-                                                        <MenuItem value='multiple'>Multiple</MenuItem>
-                                                    </Select>
-                                            </FormControl>
-                                            </Grid>
-
-                                            <Grid item xs={4} md={12}>
+                                            <Grid item xs={6} sm={4} md={12}>
                                                 <TextField
                                                 size="small"
                                                 name="marks"
                                                 label="Marks"
                                                 type="number"
-                                                variant="standard"
+                                                variant="outlined"
                                                 value={q.marks}
                                                 onWheel={(e) => e.target.blur()}
                                                 onChange={(e) => handleInputChange(e,i)}
-                                                style = {{width: 100}}
+                                                style = {{width: 120}}
                                                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*',style:{textAlign: "center"}}}
                                                 />
                                             </Grid>
+
+                                            <Grid item xs={8} sm={4} md={12}>
+                                                <Button variant="contained" size="medium" sx={{width:120}} onClick={e => handleAddOption(e, i)}>Add Option</Button>
+                                            </Grid>
+
                                         </Grid>
                                     </Grid>
 
@@ -366,23 +368,34 @@ export default function NewTest() {
                                     onChange={(e) => onRadioChange(e, i)}
                                     >
                                     {q.options.map((op, o) =>  (
-                                        <FormControlLabel 
-                                        key={o} 
-                                        value={o} 
-                                        control={<Radio />} 
-                                        label={
-                                            <TextField 
-                                                id="outlined-basic" 
-                                                variant="outlined" 
-                                                autoComplete="off" 
-                                                name="option" 
-                                                multiline size="small" 
-                                                color="info" 
-                                                onChange={e => handleOptionInputChange(e, i, o)} 
-                                                value={op.option} 
-                                                sx={{ width: [300, 390, 500, 725] }} 
-                                                />
-                                        }/>
+                                        <Grid container spacing={1} alignItems="center" sx={{ my: 0.5 }} >
+                                            <Grid item xs={10}  >
+                                                <FormControlLabel 
+                                                key={o} 
+                                                value={o} 
+                                                control={<Radio />} 
+                                                label={
+                                                    <TextField 
+                                                        id="outlined-basic" 
+                                                        variant="outlined" 
+                                                        autoComplete="off" 
+                                                        name="option" 
+                                                        multiline size="small" 
+                                                        color="info" 
+                                                        onChange={e => handleOptionInputChange(e, i, o)} 
+                                                        value={op.option} 
+                                                        sx={{ width: [300, 390, 500, 725] }} 
+                                                        />
+                                                }/>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <Button 
+                                                    variant="standard" 
+                                                    onClick={(e) => handleDeleteOption(e, i, o)}>
+                                                    <DeleteIcon color="error" fontSize="small" />
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
                                         ))}
                                     </RadioGroup>
                                 }
