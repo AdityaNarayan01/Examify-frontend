@@ -5,6 +5,7 @@ import StudentPrivateRoutes from './hoc/StudentProtectedRoutes';
 import CustomRoute from './hoc/CustomRoute';
 import { BrowserRouter as Router, Switch} from 'react-router-dom';
 import routes from './routes/routes';
+import ScrollToTop from './components/ScrollToTop'
 
 
 export default function App() {
@@ -12,8 +13,9 @@ export default function App() {
     <Router>
     
       <ThemeConfig>
+        <ScrollToTop />
         <GlobalStyles />
-      
+        
         <Switch>
           {routes.map((r, i) => (
             r.protected === true ? (
