@@ -10,7 +10,7 @@ export default function UpcomingTestPage() {
     return (
     <Page title="Examify | Upcoming Test">
         <Navbar isHome={false}/>
-        <UpcomingTestTable />
+        <UpcomingTestTable isMain={false}/>
     </Page>
     );
 }

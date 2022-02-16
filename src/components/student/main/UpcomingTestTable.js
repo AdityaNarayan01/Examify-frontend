@@ -45,7 +45,7 @@ function applySortFilter(array, comparator, query) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function User({isMain}) {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
@@ -91,7 +91,28 @@ export default function User() {
                             />
 
                             <TableBody>
-                            {filteredUsers.slice(0, 5).map((row) => {
+                            
+                            {isMain == true && filteredUsers.slice(0, 5).map((row) => {
+                                const { id, name, marks, section, branch} = row;
+
+                                return (
+                                    <TableRow
+                                    hover
+                                    key={id}
+                                    tabIndex={-1}
+                                    role="checkbox"
+                                    >
+                                        <TableCell component="th" scope="row" >
+                                            <Typography variant="subtitle2" noWrap>{name}</Typography>
+                                        </TableCell>
+                                        <TableCell align="left">{branch}</TableCell>
+                                        <TableCell align="left">{section}</TableCell>
+                                        <TableCell align="left">{marks}</TableCell>
+                                    </TableRow>
+                                );
+                            })}
+
+                            {isMain == false && filteredUsers.map((row) => {
                                 const { id, name, marks, section, branch} = row;
 
                                 return (

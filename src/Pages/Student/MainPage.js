@@ -56,7 +56,7 @@ export default function DashboardApp() {
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={12}>
-                        <UpcomingTestTable />
+                        <UpcomingTestTable isMain={true}/>
                         <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                             <Button variant="contained" size="large" onClick = {() => history.push('/StudentUpcomingTest')}>Show More</Button>
                         </Box>
@@ -65,7 +65,7 @@ export default function DashboardApp() {
                 
 
                 <Grid item xs={12} md={12} lg={12}>
-                    <SubmittedTestTable />
+                    <SubmittedTestTable isMain={true}/>
                     <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                         <Button sx={{mb: 10}} variant="contained" size="large"  onClick = {() => history.push('/StudentSubmittedTest')}>Show More</Button>
                     </Box>

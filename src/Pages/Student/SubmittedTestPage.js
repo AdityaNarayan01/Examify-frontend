@@ -9,7 +9,7 @@ export default function SubmittedTestPage() {
     return (
     <Page title="Examify | Upcoming Test">
         <Navbar isHome={false}/>
-        <SubmittedTestTable />
+        <SubmittedTestTable isMain={false}/>
     </Page>
     );
 }
