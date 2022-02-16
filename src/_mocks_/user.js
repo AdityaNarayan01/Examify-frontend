@@ -4,7 +4,7 @@ import { sample } from 'lodash';
 
 // ----------------------------------------------------------------------
 
-const users = [...Array(5)].map((_, index) => ({
+const users = [...Array(15)].map((_, index) => ({
   id: faker.datatype.uuid(),
   // avatarUrl: mockImgAvatar(index + 1),
   name: faker.name.findName(),

@@ -65,11 +65,11 @@ export default function User() {
     const isUserNotFound = filteredUsers.length === 0;
 
     return (
-        <Page title="Examify | Results">
+        <Page title="Examify | Upcoming Test">
             <Navbar />
-            <Container maxWidth="xl" sx={{mt: 5}}>
+            <Container maxWidth="xl" sx={{mt: 15}}>
 
-                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} px={2}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2} px={2}>
                     <Typography variant="h4" gutterBottom>
                         UPCOMING TEST
                     </Typography>
