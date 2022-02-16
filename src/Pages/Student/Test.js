@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Box, Grid, Container, Typography, Stack, Button } from '@mui/material';
+import { Box, Grid, Container, Typography, Stack, Button, Divider } from '@mui/material';
 import Page from '../../components/Page';
 import { MutipleCheck, SingleCheck } from '../../components/student/main';
 import newdata from '../../_mocks_/questiondata';
@@ -48,6 +48,8 @@ return (
                 </Box>
                 <Typography className="noselect" variant="h4">Time Remaining : {timeRemaining - time}</Typography>
             </Box>
+
+            <Divider />
             
             <Grid container spacing={3} sx={{pl:5, pr:5}}>
                 <Grid item xs={12} md={12} lg={12}>
