@@ -16,6 +16,9 @@ import TeacherRegister from '../Pages/Teacher/Register';
 import AddTest from '../Pages/Teacher/NewTest';
 import UpdateTest from '../Pages/Teacher/UpdateTest';
 import Result from '../Pages/Teacher/Result';
+import TeacherCompletedTest from '../Pages/Teacher/TeacherCompletedTest';
+import TeacherUpcomingTest from '../Pages/Teacher/TeacherUpcomingTest';
+
 // import StudentResult from '../Pages/Teacher/StudentResult';
 
 
@@ -92,6 +95,18 @@ const routes = [
     { 
         path: '/UpdateTest/:id',
         component: UpdateTest ,
+        protected: true,
+        isStudent: false
+    },
+    { 
+        path: '/TeacherUpcomingTest',
+        component: TeacherUpcomingTest,
+        protected: true,
+        isStudent: false
+    },
+    { 
+        path: '/TeacherCompletedTest',
+        component: TeacherCompletedTest,
         protected: true,
         isStudent: false
     },

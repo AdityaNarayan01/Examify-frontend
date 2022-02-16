@@ -15,7 +15,7 @@ export default function Homepage() {
 	return (
 	<RootStyle title="EXAMIFY">
 		<Navbar isHome={true}/>
-        <Box sx={{ backgroundColor: "#357a38", height: '100vh', display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', width: '100%'}}>
+        <Box sx={{ backgroundColor: "#4caf50", height: '100vh', display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', width: '100%'}}>
         <Typography sx={{color: '#fff'}} variant="h1" gutterBottom>Examify</Typography>
         <Typography variant="h2" gutterBottom>AN ONLINE EXAM SYSTEM</Typography>
         </Box>
