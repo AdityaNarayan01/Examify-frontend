@@ -30,7 +30,6 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 
 
-const TOTAL = 2;
 
 export default function TodayTest({total}) {
   return (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink,useNavigate  } from 'react-router-dom';
+import { Link as RouterLink, useHistory} from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Card, Stack, Link, Container, Typography,Checkbox,TextField,IconButton,InputAdornment,FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -63,7 +63,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 export default function Login() {
-	const navigate = useNavigate();
+	const navigate = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
 
 	const LoginSchema = Yup.object().shape({
@@ -76,7 +76,9 @@ export default function Login() {
 		validationSchema: LoginSchema,
 		onSubmit: async(values) => {
 			console.log(values)
-			navigate('/dashboard', { replace: true });
+			localStorage.setItem('type', 'student');
+			localStorage.setItem('authToken', '123');
+			navigate.push('/studentHome');
 		}
 	});
 
@@ -94,7 +96,7 @@ export default function Login() {
 			<MHidden width="smDown">
 				<Typography variant="body2" sx={{mt: { md: -2 }}}>
 					Don’t have an account? &nbsp;
-					<Link underline="none" variant="subtitle2" component={RouterLink} to="/register">Get started</Link>
+					<Link underline="none" variant="subtitle2" component={RouterLink} to="/studentRegister">Get started</Link>
 				</Typography>
 			</MHidden>
 		</HeaderStyle>

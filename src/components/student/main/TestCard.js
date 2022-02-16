@@ -1,17 +1,18 @@
-import faker from 'faker';
-import { fDateTime } from '../../../utils/formatTime';
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Stack, Link, Card, Button, Divider, Typography, CardHeader } from '@mui/material';
+import { Box, Stack, Button, Divider, Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 
-export default function TestCard({duration, title, startAt, endAt, type}) {
+export default function TestCard({duration, title, startAt, endAt, type, index}) {
+  const history = useHistory();
 
   const onTestStart = () => {
-    console.log('disptach Action for Start Test');
+    console.log('disptach Action for Start Test', index);
+    history.push(`/StudentTest/${index}`);
   }
 
   const onTestResult = () => {
-    console.log('dispatch Action for on Test Result');
+    console.log('dispatch Action for on Test Result', index);
+    history.push(`/StudentResult/${index}`);
   }
 
   return (
@@ -33,19 +34,21 @@ export default function TestCard({duration, title, startAt, endAt, type}) {
 
             </Box>
 
-            {type == 'today' && 
+            {type === 'today' && 
                 <Button
                   variant="contained"
                   size="large"
+                  onClick  ={() => onTestStart()}
                 >
                     Start Test
                 </Button>
             }
             
-            {type == 'submitted' && 
+            {type === 'submitted' && 
                 <Button
                   variant="contained"
                   size="large"
+                  onClick ={() => onTestResult()}
                 >
                     Test Result
                 </Button>

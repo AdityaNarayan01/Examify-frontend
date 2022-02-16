@@ -1,4 +1,4 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Card, Link, Container, Typography, Stack, TextField, IconButton, InputAdornment, InputLabel, MenuItem, Select, FormControl } from '@mui/material';
 import * as Yup from 'yup';
@@ -57,7 +57,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 export default function Register() {
-	const navigate = useNavigate();
+	const navigate = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
 
 	const RegisterSchema = Yup.object().shape({
@@ -88,7 +88,7 @@ export default function Register() {
 			<MHidden width="smDown">
 				<Typography variant="body2" sx={{mt: { md: -2 }}}>
 					Already have an account? &nbsp;
-					<Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+					<Link underline="none" variant="subtitle2" component={RouterLink} to="/StudentLogin">
 					Login
 					</Link>
 				</Typography>
@@ -237,6 +237,6 @@ export default function Register() {
 
     </ContentStyle>
     </Container>
-   </RootStyle>
+	</RootStyle>
   );
 }

@@ -1,6 +1,6 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography, Stack, TextField, IconButton, InputAdornment, InputLabel, MenuItem, Select, FormControl } from '@mui/material';
+import { Box, Card, Link, Container, Typography, Stack, TextField, IconButton, InputAdornment, MenuItem,  FormControl, Autocomplete } from '@mui/material';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
@@ -57,38 +57,41 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 export default function Register() {
-	const navigate = useNavigate();
+	const navigate = useHistory();
+
 	const [showPassword, setShowPassword] = useState(false);
+	const [sections, setsections] = useState([1,2,3,4,5,6,7]);
+	const [value, setValue] = useState([]);
 
 	const RegisterSchema = Yup.object().shape({
 		firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
 		lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
 		email: Yup.string().email('Email must be a valid email address').required('Email is required'),
 		password: Yup.string().required('Password is required'),
-		branch: Yup.string().required('Branch is required'),
-		section: Yup.number().required('Section is required'),
+		branch: Yup.string().required('Branch is required')
 	});
 
 	const formik = useFormik({
-		initialValues: {firstName: '',lastName: '',email: '',password: '', branch: '', section: ''},
+		initialValues: {firstName: '',lastName: '',email: '',password: '', branch: '', sections: []},
 		validationSchema: RegisterSchema,
 		onSubmit: async(values) => {
+			values.sections = value;
 			console.log(values);
-      		// navigate('/dashboard', { replace: true });
+			navigate.push('/teacherHome');
 		}
 	});
 
 	const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 	
 	return (
-    <RootStyle title="Student Register">
+    <RootStyle title="Teacher Register">
 	
 		<HeaderStyle>
 			<RouterLink to="/"><Logo /></RouterLink>
-      		<MHidden width="smDown">
+				<MHidden width="smDown">
         		<Typography variant="body2" sx={{mt: { md: -2 }}}>
           			Already have an account? &nbsp;
-        			<Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+        			<Link underline="none" variant="subtitle2" component={RouterLink} to="/teacherLogin">
           				Login
         			</Link>
         		</Typography>
@@ -98,7 +101,7 @@ export default function Register() {
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Student Registeration
+            Teacher Registeration
           </Typography>
           <img alt="register" src="/static/illustrations/illustration_register.png" />
         </SectionStyle>
@@ -108,7 +111,7 @@ export default function Register() {
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Student Registeration
+              Teacher Registeration
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
               Register to Examify
@@ -168,8 +171,8 @@ export default function Register() {
 				<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
 					
 				 	<FormControl fullWidth variant="standard" >
-				 		<InputLabel id="demo-simple-select-helper-label">Branch</InputLabel>
-        				<Select
+        				<TextField
+						select
 				  			fullWidth
             				type="branch"
             				label="Branch"
@@ -183,29 +186,30 @@ export default function Register() {
           					<MenuItem value={'Computer Science'}>Ten</MenuItem>
           					<MenuItem value={'Electornics '}>Twenty</MenuItem>
           					<MenuItem value={'EEE'}>Thirty</MenuItem>
-        				</Select>
+        				</TextField>
 					</FormControl>
 					
 
 					
-				 	<FormControl fullWidth variant="standard">
-				 		<InputLabel id="demo-simple-select-helper-label">Section</InputLabel>
-        				<Select
-				  			fullWidth
-            				type="branch"
-            				label="Branch"
-            				{...getFieldProps('section')}
-            				error={Boolean(touched.section && errors.section)}
-            				helperText={touched.section && errors.section}
-        				>
-          					<MenuItem value="">
-            						<em>None</em>
-          					</MenuItem>
-          					<MenuItem value={1}>1</MenuItem>
-          					<MenuItem value={2}>2</MenuItem>
-          					<MenuItem value={3}>3</MenuItem>
-        				</Select>
-					</FormControl>
+				 		<Autocomplete
+        				multiple
+						fullWidth
+        				id="tags-outlined"
+        				options={sections}
+        				getOptionLabel={(sections) => sections.toString()}
+        				defaultValue={[]}
+        				filterSelectedOptions
+						onChange={(event, newValue) => {
+							setValue([...newValue,]);
+						  }}
+        				renderInput={(params) => (
+          					<TextField
+            				{...params}
+            				label="Sections"
+            				placeholder="Choose Sections"
+          				/>
+        				)}
+      					/>
 					
 				</Stack>
 

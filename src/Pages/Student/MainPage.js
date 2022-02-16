@@ -1,7 +1,7 @@
 
-import { Box, Grid, Container, Typography, Stack } from '@mui/material';
+import { Box, Grid, Container, Typography, Stack, Divider, Button } from '@mui/material';
 import Page from '../../components/Page';
-import { UpcomingTest,TestMissed,TestSubmiited,AppNewsUpdate,TodayTest  } from '../../components/student/main';
+import { UpcomingTest,TestMissed,TestSubmiited,AppNewsUpdate,TodayTest, UpcomingTestTable, SubmittedTestTable  } from '../../components/student/main';
 import Navbar from '../../components/student/navbar/Navbar';
 import faker from 'faker';
 // import Scrollbar from '../../components/Scrollbar'
@@ -12,7 +12,7 @@ export default function DashboardApp() {
 
     return (
     <Page title="Examify | Home">
-        <Navbar />
+        <Navbar isHome={false}/>
         <Container maxWidth="xl">
             <Box sx={{ pt: 15, pb: 5}}>
                 <Typography variant="h4">Welcome to Examify</Typography>
@@ -41,60 +41,33 @@ export default function DashboardApp() {
                     <Box sx={{ pt: 5, pb: 2}}>
                         <Typography variant="h4">Today Test</Typography>
                     </Box>
-                    {arr.map(() => (
+                    {arr.map((data, index) => (
                         <AppNewsUpdate 
                         duration="240 mins" 
                         title="Compiler Design CT1" 
                         startAt = {faker.date.soon()}
                         endAt = {faker.date.soon()}
                         type='today'
+                        index = {index}
                         />
                     ))}
                 </Grid>
 
-                <Grid item xs={12} md={12} lg={7}>
-                    <Box sx={{ pt: 5, pb: 2}}>
-                        <Typography variant="h4">Upcoming Test</Typography>
+                <Grid item xs={12} md={12} lg={12}>
+                        <UpcomingTestTable />
+                        <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                            <Button variant="contained" size="large">Show More</Button>
+                        </Box>
+                </Grid>
+
+                
+
+                <Grid item xs={12} md={12} lg={12}>
+                    <SubmittedTestTable />
+                    <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                        <Button variant="contained" size="large">Show More</Button>
                     </Box>
-                        {arr.map(() => (
-                            <AppNewsUpdate 
-                            duration="240 mins" 
-                            title="Compiler Design CT1" 
-                            startAt = {faker.date.soon()}
-                            endAt = {faker.date.soon()}
-                            
-                            />
-                        ))} 
-
                 </Grid>
-
-                <Grid item xs={12} md={12} lg={6}>
-                    <Box sx={{ pt: 5, pb: 2}}>
-                        <Typography variant="h4">Test Submitted</Typography>
-                    </Box>
-                    {arr.map(() => (
-                        <AppNewsUpdate 
-                        duration="240 mins" 
-                        title="Compiler Design CT1" 
-                        startAt = {faker.date.soon()}
-                        endAt = {faker.date.soon()}
-                        type='submitted'
-                        />
-                    ))}
-                    
-                </Grid>
-
-                {/* <Grid item xs={12} md={6} lg={4}>
-                    <AppOrderTimeline />
-                </Grid>
-
-                <Grid item xs={12} md={6} lg={4}>
-                    <AppTrafficBySite />
-                </Grid>
-
-                <Grid item xs={12} md={6} lg={8}>
-                    <AppTasks />
-                </Grid> */}
         </Grid>
       </Container>
     </Page>
