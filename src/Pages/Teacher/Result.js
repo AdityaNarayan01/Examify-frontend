@@ -6,7 +6,7 @@ import { Card, Table, Stack, Button, Checkbox, TableRow, TableBody, TableCell, C
 
 import Page from '../../components/Page';
 import SearchNotFound from '../../components/SearchNotFound';
-import { UserListHead, UserListToolbar } from '../../components/teacher';
+import { UserListHead, UserListToolbar } from '../../components/teacher/tablecomponent';
 import Navbar from '../../components/student/navbar/Navbar';
 import USERLIST from '../../_mocks_/user';
 
