@@ -4,10 +4,12 @@ import Page from '../../components/Page';
 import { UpcomingTest,TestMissed,TestSubmiited,AppNewsUpdate,TodayTest, UpcomingTestTable, SubmittedTestTable  } from '../../components/student/main';
 import Navbar from '../../components/student/navbar/Navbar';
 import faker from 'faker';
+import { useHistory } from 'react-router-dom';
 // import Scrollbar from '../../components/Scrollbar'
 
 
 export default function DashboardApp() {
+    const history = useHistory();
     const arr = Array.from(Array(5).keys());
 
     return (
@@ -56,7 +58,7 @@ export default function DashboardApp() {
                 <Grid item xs={12} md={12} lg={12}>
                         <UpcomingTestTable />
                         <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                            <Button variant="contained" size="large">Show More</Button>
+                            <Button variant="contained" size="large" onClick = {() => history.push('/StudentUpcomingTest')}>Show More</Button>
                         </Box>
                 </Grid>
 
@@ -65,11 +67,11 @@ export default function DashboardApp() {
                 <Grid item xs={12} md={12} lg={12}>
                     <SubmittedTestTable />
                     <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                        <Button variant="contained" size="large">Show More</Button>
+                        <Button sx={{mb: 10}} variant="contained" size="large"  onClick = {() => history.push('/StudentSubmittedTest')}>Show More</Button>
                     </Box>
                 </Grid>
         </Grid>
-      </Container>
+        </Container>
     </Page>
   );
 }
