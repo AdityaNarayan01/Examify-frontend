@@ -7,6 +7,7 @@ import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
 import MenuPopover from './MenuPopover';
 import account from '../../../_mocks_/account';
+import { useHistory } from 'react-router-dom';
 
 
 const MENU_OPTIONS = [
@@ -24,6 +25,7 @@ const MENU_OPTIONS = [
 
 
 export default function AccountPopover({name, email}) {
+  const history = useHistory();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -35,7 +37,14 @@ export default function AccountPopover({name, email}) {
   };
 
   const logoutsubmit = () => {
-    console.log('logout button clicked')
+    const type = localStorage.getItem('type');
+    localStorage.clear();
+
+    if(type == 'student'){
+      history.push('/studentLogin');
+    }else{
+      history.push('/teacherLogin');
+    }
   }
 
   return (

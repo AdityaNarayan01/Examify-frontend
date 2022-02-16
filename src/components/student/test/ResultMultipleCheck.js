@@ -5,7 +5,7 @@ import {Box,Checkbox,Typography,FormControlLabel,Stack, Divider} from '@mui/mate
 
 export default function AppTasks({ title, marks, answered, mcqQuestions}) {
 
-    const [checked, setchecked] = React.useState(answered);
+    const [checked] = React.useState(answered);
 
     return (
         <Box sx={{ px: 3, py: 1, mt: 3 }}>

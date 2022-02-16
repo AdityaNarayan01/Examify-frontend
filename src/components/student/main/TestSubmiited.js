@@ -29,7 +29,6 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 
-const TOTAL = 2000;
 
 export default function TestSubmiited({total}) {
   return (

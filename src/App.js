@@ -1,17 +1,33 @@
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
-import Login from './Pages/Teacher/Login';
-import Register from './Pages/Student/Register';
-import Main from './Pages/Student/MainPage';
-import Test from './Pages/Student/Test';
-import Result from './Pages/Student/Result';
-import NewTest from './Pages/Teacher/NewTest';
+import TeacherPrivateRoutes from './hoc/TeacherProctectedRoutes';
+import StudentPrivateRoutes from './hoc/StudentProtectedRoutes';
+import CustomRoute from './hoc/CustomRoute';
+import { BrowserRouter as Router, Switch} from 'react-router-dom';
+import routes from './routes/routes';
+
 
 export default function App() {
   return (
-    <ThemeConfig>
-      <GlobalStyles />
-      <NewTest />
-    </ThemeConfig>
+    <Router>
+    
+      <ThemeConfig>
+        <GlobalStyles />
+      
+        <Switch>
+          {routes.map((r, i) => (
+            r.protected === true ? (
+              r.isStudent === true ? (<StudentPrivateRoutes key={i} path={r.path} Component={r.component}/>) : 
+              (<TeacherPrivateRoutes key={i} path={r.path} Component={r.component}/>)
+            ) :
+            (
+              <CustomRoute key={i} path={r.path} Component={r.component}/>
+            )
+          ))}
+        </Switch>
+
+      </ThemeConfig>
+    
+    </Router>
   );
 }

@@ -4,8 +4,10 @@ import { Box, Grid, Container, Typography, Stack, Button } from '@mui/material';
 import Page from '../../components/Page';
 import { MutipleCheck, SingleCheck } from '../../components/student/main';
 import newdata from '../../_mocks_/questiondata';
+import { useHistory } from 'react-router-dom';
 
 export default function DashboardApp() {
+    const history = useHistory();
     const [data, setdata] = React.useState(newdata)
     const [timeRemaining, settimeRemaining] = React.useState(240);
 
@@ -29,6 +31,11 @@ export default function DashboardApp() {
     //         clearInterval(timer);
     //     })
     // }, [])
+
+    const SubmitTest = () => {
+        console.log('Test Submitted');
+        history.push('/');
+    }
 
 return (
     <Page title={`Test | ${data?.title}`}>
@@ -71,7 +78,7 @@ return (
         </Grid>
         
         <Box sx={{mt:10,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-            <Button variant="contained" size="large"> Submit test </Button>
+            <Button variant="contained" size="large" onClick= {() => SubmitTest()}> Submit test </Button>
         </Box>
 
         </Container>

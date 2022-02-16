@@ -11,7 +11,7 @@ const data = {
             title: 'This is a Question',
             mcqType: false,
             marks: 1,
-            answered: 0,
+            answered: [0],
             mcqQuestions:[
                 {mcqTitle: 'This is a Option',answer: false},
                 {mcqTitle: 'This is a Option 2',answer: true},
@@ -23,7 +23,7 @@ const data = {
             title: 'This is a Question 2',
             mcqType: false,
             marks: 1,
-            answered: 2,
+            answered: [2],
             mcqQuestions:[
                 {mcqTitle: 'This is a Option',answer: false},
                 {mcqTitle: 'This is a Option 2',answer: false},

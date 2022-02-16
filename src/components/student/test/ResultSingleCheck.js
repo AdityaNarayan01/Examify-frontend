@@ -5,7 +5,7 @@ import {Box,Typography,FormControlLabel, Divider, RadioGroup, Radio} from '@mui/
 
 export default function AppTasks({title, marks, answered, mcqQuestions, dataQuestions,  disabled, correct}) {
 
-    const [checked, setchecked] = React.useState(answered);
+    const [checked] = React.useState(answered[0]);
 
     return (
         <Box sx={{ px: 3, py: 1, mt: 3 }}>
@@ -25,7 +25,7 @@ export default function AppTasks({title, marks, answered, mcqQuestions, dataQues
                     
                     label={
                         <Typography className="noselect" variant="body2" 
-                                sx={{...(index == answered && ( mcq.answer ? { color: 'green' } : {color: 'red'} ))}}
+                                sx={{...(index === answered[0] && ( mcq.answer ? { color: 'green' } : {color: 'red'} ))}}
                         >
                             {mcq.mcqTitle}
                         </Typography>
