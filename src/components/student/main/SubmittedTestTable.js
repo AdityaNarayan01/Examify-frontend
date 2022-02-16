@@ -1,7 +1,7 @@
 import { filter } from 'lodash';
 import { useState } from 'react';
 
-import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Box} from '@mui/material';
+import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Box, Button} from '@mui/material';
 
 import Page from '../../Page';
 import SearchNotFound from '../../SearchNotFound';
@@ -14,6 +14,7 @@ const TABLE_HEAD = [
     { id: 'branch', label: 'Start Date', alignRight: false },
     { id: 'section', label: 'Section', alignRight: false },
     { id: 'marks', label: 'Marks', alignRight: false },
+    { id: 'viewTest', label: 'View Test', alignRight: false },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -108,6 +109,13 @@ export default function User({isMain}) {
                                         <TableCell align="left">{branch}</TableCell>
                                         <TableCell align="left">{section}</TableCell>
                                         <TableCell align="left">{marks}</TableCell>
+                                        <TableCell align="left">
+                                          <Button
+                                             variant="contained"
+                                             size="small"
+                                             to="#"
+                                          > View</Button>
+                                       </TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -128,6 +136,13 @@ export default function User({isMain}) {
                                         <TableCell align="left">{branch}</TableCell>
                                         <TableCell align="left">{section}</TableCell>
                                         <TableCell align="left">{marks}</TableCell>
+                                        <TableCell align="left">
+                                          <Button
+                                             variant="contained"
+                                             size="small"
+                                             to="#"
+                                          > View</Button>
+                                       </TableCell>
                                     </TableRow>
                                 );
                             })}
