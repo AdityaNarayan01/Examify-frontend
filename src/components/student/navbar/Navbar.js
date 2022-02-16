@@ -1,6 +1,5 @@
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar,Button} from '@mui/material';
-import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import Logo from '../../Logo';
 import { Link as RouterLink, useHistory} from 'react-router-dom';
@@ -37,8 +36,8 @@ export default function DashboardNavbar({isHome}) {
                 
                 {isHome === false && 
                     <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-                        <Searchbar />
                         <AccountPopover name ="Yogesh" email="yashrdr11@gmail.com" />
+                        
                     </Stack>
                 }
 
