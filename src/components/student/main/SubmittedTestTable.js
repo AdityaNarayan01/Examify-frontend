@@ -91,7 +91,7 @@ export default function User() {
                            onRequestSort={handleRequestSort}
                         />
                         <TableBody>
-                           {filteredUsers.map((row) => {
+                           {filteredUsers.slice(0, 5).map((row) => {
                                  const { id, name, marks, section, branch} = row;
 
                                  return (
