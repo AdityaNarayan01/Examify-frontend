@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Box, Grid, Container, Typography, Stack, Divider, Button } from '@mui/material';
 import Page from '../../components/Page';
 import { UpcomingTest,TestMissed,TestSubmiited,AppNewsUpdate,TodayTest, UpcomingTestTable, SubmittedTestTable  } from '../../components/student/main';
@@ -6,10 +7,14 @@ import Navbar from '../../components/student/navbar/Navbar';
 import faker from 'faker';
 import { useHistory } from 'react-router-dom';
 // import Scrollbar from '../../components/Scrollbar'
+import studentMain from '../../_mocks_/studentMain';
 
 
 export default function DashboardApp() {
     const history = useHistory();
+    const [todayTest] =  React.useState(studentMain.todayTest);
+    const [upcomingTest] =  React.useState(studentMain.upcomingTest);
+    const [submittedTest] =  React.useState();
     const arr = Array.from(Array(5).keys());
 
     return (
@@ -43,23 +48,22 @@ export default function DashboardApp() {
                     <Box sx={{ pt: 5, pb: 2}}>
                         <Typography variant="h4">Today Test</Typography>
                     </Box>
-                    {arr.map((data, index) => (
-                        <AppNewsUpdate 
-                        duration="240 mins" 
-                        title="Compiler Design CT1" 
-                        startAt = {faker.date.soon()}
-                        endAt = {faker.date.soon()}
-                        type='today'
+                    {todayTest.map((data, index) => (
+                        <AppNewsUpdate
+                        data = {data}
                         index = {index}
                         />
                     ))}
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={12}>
-                        <UpcomingTestTable isMain={true}/>
-                        <Box sx={{mt:5,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                            <Button variant="contained" size="large" onClick = {() => history.push('/StudentUpcomingTest')}>Show More</Button>
-                        </Box>
+                        <UpcomingTestTable data={upcomingTest} isMain={true}/>
+                        {upcomingTest && upcomingTest?.length > 0 &&
+                            <Box sx={{mt:5,display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                                <Button variant="contained" size="large" onClick = {() => history.push('/StudentUpcomingTest')}>Show More</Button>
+                            </Box>
+                        }
+                        
                 </Grid>
 
 
