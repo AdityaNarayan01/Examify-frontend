@@ -1,19 +1,17 @@
 import { filter } from 'lodash';
 import { useState } from 'react';
-
-import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Box} from '@mui/material';
-
+import {Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Box} from '@mui/material';
 import Page from '../../Page';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '../tablecomponent';
 import Navbar from '../navbar/Navbar';
-import USERLIST from '../../../_mocks_/user';
+
 
 const TABLE_HEAD = [
-    { id: 'name', label: 'Test Name', alignRight: false },
-    { id: 'branch', label: 'Start Date', alignRight: false },
-    { id: 'section', label: 'Section', alignRight: false },
-    { id: 'marks', label: 'Marks', alignRight: false },
+    { id: 'name', label: 'Test Title', alignRight: false },
+    { id: 'startDate', label: 'Start Time', alignRight: false },
+    { id: 'endDate', label: 'End Time', alignRight: false },
+    { id: 'marks', label: 'Total Marks', alignRight: false },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -45,7 +43,11 @@ function applySortFilter(array, comparator, query) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User({isMain}) {
+
+
+
+export default function User({isMain, data}) {
+    const [upcomingTest] = useState(data);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
@@ -60,9 +62,21 @@ export default function User({isMain}) {
         setFilterName(event.target.value);
     };
 
-    const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+    const filteredUsers = applySortFilter(upcomingTest, getComparator(order, orderBy), filterName);
 
     const isUserNotFound = filteredUsers.length === 0;
+
+    const changeTimeStamptoDate = (timeStamp) => {
+        var date = new Date(timeStamp);
+        var str = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":";
+    
+        if(date.getMinutes() < 10)
+        str = str + "0";
+    
+        str = str + date.getMinutes();
+        return str;
+    }
+
 
     return (
         <Page title="Examify | Upcoming Test">
@@ -77,6 +91,7 @@ export default function User({isMain}) {
                     <UserListToolbar
                         filterName={filterName}
                         onFilterName={handleFilterByName}
+                        placeholder = "Search Upcoming Test..."
                     />
                 </Stack>
 
@@ -92,52 +107,61 @@ export default function User({isMain}) {
 
                             <TableBody>
                             
-                            {isMain == true && filteredUsers.slice(0, 5).map((row) => {
-                                const { id, name, marks, section, branch} = row;
-
+                            {data && isMain == true && filteredUsers?.slice(0, 5).map((row, i) => {
                                 return (
                                     <TableRow
                                     hover
-                                    key={id}
+                                    key={i}
                                     tabIndex={-1}
                                     role="checkbox"
                                     >
                                         <TableCell component="th" scope="row" >
-                                            <Typography variant="subtitle2" noWrap>{name}</Typography>
+                                            <Typography variant="subtitle2" noWrap>{row?.title}</Typography>
                                         </TableCell>
-                                        <TableCell align="left">{branch}</TableCell>
-                                        <TableCell align="left">{section}</TableCell>
-                                        <TableCell align="left">{marks}</TableCell>
+                                        <TableCell align="left">{changeTimeStamptoDate(row?.startTime)}</TableCell>
+                                        <TableCell align="left">{changeTimeStamptoDate(row?.endTime)}</TableCell>
+                                        <TableCell align="left">{row?.totalMarks}</TableCell>
                                     </TableRow>
                                 );
                             })}
 
-                            {isMain == false && filteredUsers.map((row) => {
-                                const { id, name, marks, section, branch} = row;
-
+                            {data && isMain == false && filteredUsers?.map((row, i) => {
                                 return (
                                     <TableRow
                                     hover
-                                    key={id}
+                                    key={i}
                                     tabIndex={-1}
                                     role="checkbox"
                                     >
                                         <TableCell component="th" scope="row" >
-                                            <Typography variant="subtitle2" noWrap>{name}</Typography>
+                                            <Typography variant="subtitle2" noWrap>{row?.title}</Typography>
                                         </TableCell>
-                                        <TableCell align="left">{branch}</TableCell>
-                                        <TableCell align="left">{section}</TableCell>
-                                        <TableCell align="left">{marks}</TableCell>
+                                        <TableCell align="left">{changeTimeStamptoDate(row?.startTime)}</TableCell>
+                                        <TableCell align="left">{changeTimeStamptoDate(row?.endTime)}</TableCell>
+                                        <TableCell align="left">{row?.totalMarks}</TableCell>
                                     </TableRow>
                                 );
                             })}
 
                             </TableBody>
-                            {isUserNotFound && (
+
+                            {data && isUserNotFound && (
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align="center" colSpan={5} sx={{ py: 1 }}>
                                             <SearchNotFound searchQuery={filterName} />
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            )}
+
+                            {!data && (
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell align="center" colSpan={5} sx={{ py: 1 }}>
+                                        
+                                            <Typography variant="subtitle1" noWrap>No Upcoming Test</Typography>
+                                        
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
