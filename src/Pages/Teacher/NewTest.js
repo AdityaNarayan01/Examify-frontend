@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Grid, Container, Typography, Stack, TextField, FormGroup, FormControlLabel, Checkbox ,Autocomplete,Radio,FormControl,FormLabel,RadioGroup, MenuItem, Select, InputLabel} from '@mui/material';
+import { Box, Button, Grid, Container, Typography, Stack, TextField, FormGroup, FormControlLabel, Checkbox ,Autocomplete,Radio,FormControl,FormLabel,RadioGroup, MenuItem, Select, InputLabel,InputAdornment} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Page from '../../components/Page';
 import {LocalizationProvider,TimePicker,DateTimePicker,DesktopDatePicker} from '@mui/lab';
@@ -9,7 +9,7 @@ import Navbar from '../../components/student/navbar/Navbar';
 
 export default function NewTest() {
     const tdate = new Date().toISOString().slice(0,-5);
-    const [test,setTest] = useState({title:"", startTime:tdate, endTime:tdate, branchspecific:false, branch:null, section:null});
+    const [test,setTest] = useState({title:"", startTime:tdate, endTime:tdate, branchspecific:false, branch:null, section:null ,isduration:false,duration:null});
     const [questions, setQuestions] = useState([{ questiontitle: "Question", marks:"1", mcqType:'single', options: [{ option: "Option", status: true }] }]);
 
     const branchprops = {
@@ -81,6 +81,13 @@ export default function NewTest() {
             section:newValue
         }));
     };
+
+    const handleInputduration = (e) => {
+        setTest((prevState)=>({
+            ...prevState,
+            duration:e.target.value
+        }));
+    }
 
     const handleAddClick = () => {
         setQuestions([...questions, { questiontitle: "Question", marks:"1", mcqType:'single', options: [{ option: "Option", status: true }] }]);
@@ -227,6 +234,41 @@ export default function NewTest() {
                                     renderInput={(params) => (
                                         <TextField {...params} label="Section" variant="standard" />
                                     )}
+                                    />
+                                </Grid>
+                            </Grid>
+                            
+                            <Grid container spacing={1} alignItems="center" >
+                                <Grid item xs={12} md={2} >
+                                    <FormGroup >
+                                        <FormControlLabel 
+                                        control={
+                                            <Checkbox 
+                                            name="isduration" 
+                                            checked={test.isduration} 
+                                            onChange={handlebranch} 
+                                            inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+                                        } 
+                                        label="Duration" 
+                                        />
+                                    </FormGroup>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6} md={5}>
+                                    <TextField
+                                    disabled={!test.isduration}
+                                    name="duration"
+                                    label="Duration"
+                                    type="number"
+                                    variant="outlined"
+                                    value={test.duration}
+                                    onWheel={(e) => e.target.blur()}
+                                    onChange={(e) => handleInputduration(e)}
+                                    InputProps={{
+                                        endAdornment: <InputAdornment position="end">min</InputAdornment>,
+                                    }}
+                                    inputProps={{inputMode: 'numeric', pattern: '[0-9]*',style:{textAlign: "center"}}}
                                     />
                                 </Grid>
                             </Grid>
