@@ -5,6 +5,7 @@ import Page from '../../Page';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '../tablecomponent';
 import Navbar from '../navbar/Navbar';
+import studentMain from '../../../_mocks_/studentMain';
 
 
 const TABLE_HEAD = [
@@ -46,8 +47,8 @@ function applySortFilter(array, comparator, query) {
 
 
 
-export default function User({isMain, data}) {
-    const [upcomingTest] = useState(data);
+export default function User({isMain}) {
+    const [upcomingTest] =  useState(studentMain.upcomingTest);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
@@ -79,7 +80,7 @@ export default function User({isMain, data}) {
 
 
     return (
-        <Page title="Examify | Upcoming Test">
+        <Page title="Examify">
             <Navbar />
             <Container maxWidth="xl" sx={{mt: 15}}>
 
@@ -107,7 +108,7 @@ export default function User({isMain, data}) {
 
                             <TableBody>
                             
-                            {data && isMain == true && filteredUsers?.slice(0, 5).map((row, i) => {
+                            {upcomingTest && isMain == true && filteredUsers?.slice(0, 5).map((row, i) => {
                                 return (
                                     <TableRow
                                     hover
@@ -125,7 +126,7 @@ export default function User({isMain, data}) {
                                 );
                             })}
 
-                            {data && isMain == false && filteredUsers?.map((row, i) => {
+                            {upcomingTest && isMain == false && filteredUsers?.map((row, i) => {
                                 return (
                                     <TableRow
                                     hover
@@ -145,7 +146,7 @@ export default function User({isMain, data}) {
 
                             </TableBody>
 
-                            {data && isUserNotFound && (
+                            {upcomingTest && isUserNotFound && (
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align="center" colSpan={5} sx={{ py: 1 }}>
@@ -155,7 +156,7 @@ export default function User({isMain, data}) {
                                 </TableBody>
                             )}
 
-                            {!data && (
+                            {!upcomingTest && (
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align="center" colSpan={5} sx={{ py: 1 }}>

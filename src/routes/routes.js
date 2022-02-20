@@ -18,8 +18,7 @@ import UpdateTest from '../Pages/Teacher/UpdateTest';
 import Result from '../Pages/Teacher/Result';
 import TeacherCompletedTest from '../Pages/Teacher/TeacherCompletedTest';
 import TeacherUpcomingTest from '../Pages/Teacher/TeacherUpcomingTest';
-
-// import StudentResult from '../Pages/Teacher/StudentResult';
+import StudentTestResult from '../Pages/Teacher/StudentResult';
 
 
 const routes = [
@@ -113,6 +112,12 @@ const routes = [
     { 
         path: '/Result/:id',
         component: Result,
+        protected: true,
+        isStudent: false
+    },
+    { 
+        path: '/TestResult/:id/:sid',
+        component: StudentTestResult,
         protected: true,
         isStudent: false
     },

@@ -1,20 +1,21 @@
 import { filter } from 'lodash';
 import { useState } from 'react';
-
-import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Box, Button} from '@mui/material';
-
+import {useHistory } from "react-router-dom";
+import { Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Box, Button} from '@mui/material';
 import Page from '../Page';
 import SearchNotFound from '../SearchNotFound';
 import { UserListHead, UserListToolbar } from './tablecomponent';
 import Navbar from './navbar/Navbar';
-import USERLIST from '../../_mocks_/user';
+import TeacherMain from '../../_mocks_/teacherMain';
+
 
 const TABLE_HEAD = [
     { id: 'name', label: 'Test Name', alignRight: false },
-    { id: 'branch', label: 'Start Date', alignRight: false },
+    { id: 'date', label: 'Date', alignRight: false },
+    { id: 'branch', label: 'Branch', alignRight: false },
     { id: 'section', label: 'Section', alignRight: false },
-    { id: 'marks', label: 'Marks', alignRight: false },
-    { id: 'viewTest', label: 'View Test', alignRight: false },
+    { id: 'submitted', label: 'Submitted', alignRight: false },
+    { id: 'viewTest', label: 'View Result', alignRight: true },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -47,6 +48,8 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User({isMain}) {
+    const history = useHistory();
+    const [upcomingTest] = useState(TeacherMain.completedTest);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
@@ -61,23 +64,35 @@ export default function User({isMain}) {
         setFilterName(event.target.value);
     };
 
-    const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+    const filteredUsers = applySortFilter(upcomingTest, getComparator(order, orderBy), filterName);
 
     const isUserNotFound = filteredUsers.length === 0;
 
+    const changeTimeStamptoDate = (timeStamp) => {
+        var date = new Date(timeStamp);
+        var str = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":";
+    
+        if(date.getMinutes() < 10)
+        str = str + "0";
+    
+        str = str + date.getMinutes();
+        return str;
+    }
+
     return (
-        <Page title="Examify | Upcoming Test">
+        <Page >
             <Navbar />
             <Container maxWidth="xl" sx={{mt: 15}}>
 
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2} px={2}>
                     <Typography variant="h4" gutterBottom>
-                        TEST SUBMIITED
+                        COMPLETED TESTS
                     </Typography>
                         {/* SEARCH */}
                     <UserListToolbar
                         filterName={filterName}
                         onFilterName={handleFilterByName}
+                        placeholder = "Search Completed Test..."
                     />
                 </Stack>
 
@@ -93,66 +108,68 @@ export default function User({isMain}) {
 
                             <TableBody>
                             
-                            {isMain == true && filteredUsers.slice(0, 5).map((row) => {
-                                const { id, name, marks, section, branch} = row;
-
+                            {upcomingTest && isMain == true && filteredUsers.slice(0, 5).map((row,i) => {
                                 return (
                                     <TableRow
                                     hover
-                                    key={id}
+                                    key={i}
                                     tabIndex={-1}
                                     role="checkbox"
                                     >
                                         <TableCell component="th" scope="row" >
-                                            <Typography variant="subtitle2" noWrap>{name}</Typography>
+                                            <Typography variant="subtitle2" noWrap>{row?.title}</Typography>
                                         </TableCell>
-                                        <TableCell align="left">{branch}</TableCell>
-                                        <TableCell align="left">{section}</TableCell>
-                                        <TableCell align="left">{marks}</TableCell>
-                                        <TableCell align="left">
-                                          <Button
-                                             variant="contained"
-                                             size="small"
-                                             to="#"
-                                          > View</Button>
-                                       </TableCell>
+                                        <TableCell align="left">{changeTimeStamptoDate(row?.startTime)}</TableCell>
+                                        <TableCell align="left">{row?.branch}</TableCell>
+                                        <TableCell align="left">{row?.section}</TableCell>
+                                        <TableCell align="left">50/60</TableCell>
+                                        <TableCell align="right">
+                                            <Button variant="contained" size="small" onClick = {() => history.push(`/Result/${i}`)} > View</Button>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
 
-                            {isMain == false && filteredUsers.map((row) => {
-                                const { id, name, marks, section, branch} = row;
-
+                            {isMain == false && filteredUsers.map((row,i) => {
                                 return (
                                     <TableRow
                                     hover
-                                    key={id}
+                                    key={i}
                                     tabIndex={-1}
                                     role="checkbox"
                                     >
                                         <TableCell component="th" scope="row" >
-                                            <Typography variant="subtitle2" noWrap>{name}</Typography>
+                                            <Typography variant="subtitle2" noWrap>{row?.title}</Typography>
                                         </TableCell>
-                                        <TableCell align="left">{branch}</TableCell>
-                                        <TableCell align="left">{section}</TableCell>
-                                        <TableCell align="left">{marks}</TableCell>
-                                        <TableCell align="left">
-                                          <Button
-                                             variant="contained"
-                                             size="small"
-                                             to="#"
-                                          > View</Button>
-                                       </TableCell>
+                                        <TableCell align="left">{changeTimeStamptoDate(row?.startTime)}</TableCell>
+                                        <TableCell align="left">{row?.branch}</TableCell>
+                                        <TableCell align="left">{row?.section}</TableCell>
+                                        <TableCell align="left">50/60</TableCell>
+                                        <TableCell align="right">
+                                            <Button variant="contained" size="small" onClick = {() => history.push(`/Result/${i}`)} > View</Button>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
 
                             </TableBody>
-                            {isUserNotFound && (
+                            {upcomingTest && isUserNotFound && (
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align="center" colSpan={5} sx={{ py: 1 }}>
                                             <SearchNotFound searchQuery={filterName} />
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            )}
+
+                            {!upcomingTest && (
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell align="center" colSpan={5} sx={{ py: 1 }}>
+                                        
+                                            <Typography variant="subtitle1" noWrap>No Upcoming Test</Typography>
+                                        
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>

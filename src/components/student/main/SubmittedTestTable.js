@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Box, Button} from '@mui/material';
 
 import Page from '../../Page';
@@ -47,6 +47,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User({isMain}) {
+    const history = useHistory();
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
@@ -113,7 +114,7 @@ export default function User({isMain}) {
                                           <Button
                                              variant="contained"
                                              size="small"
-                                             to="#"
+                                             onClick = {() => history.push(`/StudentResult/${id}`)}
                                           > View</Button>
                                        </TableCell>
                                     </TableRow>
@@ -140,7 +141,7 @@ export default function User({isMain}) {
                                           <Button
                                              variant="contained"
                                              size="small"
-                                             to="#"
+                                             onClick = {() => history.push(`/StudentResult/${id}`)}
                                           > View</Button>
                                        </TableCell>
                                     </TableRow>

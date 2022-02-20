@@ -8,9 +8,9 @@ import Navbar from '../../components/student/navbar/Navbar';
 
 
 export default function NewTest() {
-    const tdate = new Date().toISOString().slice(0,-5);
-    const [test,setTest] = useState({title:"", startTime:tdate, endTime:tdate, branchspecific:false, branch:null, section:null ,isduration:false,duration:null});
-    const [questions, setQuestions] = useState([{ questiontitle: "Question", marks:"1", mcqType:'single', options: [{ option: "Option", status: true }] }]);
+    const tdate = new Date();
+    const [test,setTest] = useState({title:"", startDate:tdate, endDate:tdate, isBranchSpecific:false, branch:null, section:null ,isduration:false,duration:''});
+    const [questions, setQuestions] = useState([{ title: 'This is a Question', marks:"1",mcqType:false, mcq:'single', mcqQuestions: [{ mcqTitle: 'This is a Option', answer: true }] }]);
 
     const branchprops = {
         options: branch,
@@ -25,15 +25,13 @@ export default function NewTest() {
 
     const mcqTypeChange = (e, i) => {
         const list = [...questions];
-        if(e.target.value == list[i].mcqType)
-        return;
-
         if(e.target.value == 'single'){
-            list[i].options.forEach(ele => ele.status = false);
-            list[i].options[0].status = true;
+            list[i].mcqQuestions.forEach(ele => ele.answer = false);
+            list[i].mcqQuestions[0].answer = true;
         }
 
-        list[i].mcqType = e.target.value;
+        list[i].mcq = e.target.value;
+        list[i].mcqType = (e.target.value == 'single'?false:true);
         setQuestions(list);
     }
 
@@ -46,17 +44,17 @@ export default function NewTest() {
         }));
     }
 
-    const handleStartTime = (newValue) => {
+    const handlestartDate = (newValue) => {
         setTest((prevState)=>({
             ...prevState,
-            startTime:newValue
+            startDate:newValue
         }));
     };
 
-    const handleEndTime = (newValue) => {
+    const handleendDate = (newValue) => {
         setTest((prevState)=>({
             ...prevState,
-            endTime:newValue
+            endDate:newValue
         }));
     };
 
@@ -90,7 +88,7 @@ export default function NewTest() {
     }
 
     const handleAddClick = () => {
-        setQuestions([...questions, { questiontitle: "Question", marks:"1", mcqType:'single', options: [{ option: "Option", status: true }] }]);
+        setQuestions([...questions, { title: 'This is a Question', marks:1, mcq:'single',mcqType:false, mcqQuestions: [{ mcqTitle: 'This is a Option', answer: true }] }]);
     }
 
 
@@ -102,13 +100,13 @@ export default function NewTest() {
 
     const handleAddOption = (e, i) => {
         const list = [...questions];
-        list[i].options.push({ option: "Option", status: false });
+        list[i].mcqQuestions.push({ mcqTitle: 'This is a Option 2', answer: false });
         setQuestions(list);
     }
 
     const handleOptionChange = (e, i, o) => {
         const list = [...questions];
-        list[i].options[o].status = e.target.checked;
+        list[i].mcqQuestions[o].answer = e.target.checked;
         setQuestions(list);
     }
 
@@ -122,7 +120,7 @@ export default function NewTest() {
     const handleOptionInputChange = (e, i, o) => {
         const { name, value } = e.target;
         const list = [...questions];
-        list[i].options[o].option = value;
+        list[i].mcqQuestions[o].mcqTitle = value;
         setQuestions(list);
     }
 
@@ -134,19 +132,19 @@ export default function NewTest() {
 
     const handleDeleteOption = (e, i, o) => {
         const list = [...questions];
-        list[i].options.splice(o, 1);
+        list[i].mcqQuestions.splice(o, 1);
         setQuestions(list);
     }
 
     const onRadioChange = (e, i) => {
         const list = [...questions];
-        const prevIndex = list[i].options.findIndex(item => item.status == true);
+        const prevIndex = list[i].mcqQuestions.findIndex(item => item.answer == true);
 
         if(prevIndex == e.target.value)
             return;
 
-        list[i].options[prevIndex].status = false
-        list[i].options[e.target.value].status = true;
+        list[i].mcqQuestions[prevIndex].answer = false
+        list[i].mcqQuestions[e.target.value].answer = true;
         setQuestions(list);
     }
 
@@ -172,15 +170,15 @@ export default function NewTest() {
                             <Grid container spacing={1} justifyContent="space-between"  >
                                 <Grid item xs={12} sm={6} >
                                     <DateTimePicker label="Start Time" 
-                                    value={test.startTime}
-                                    onChange={handleStartTime} 
+                                    value={test.startDate}
+                                    onChange={handlestartDate} 
                                     renderInput={(params) => <TextField {...params} />}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <DateTimePicker label="End Time" 
-                                    value={test.endTime}
-                                    onChange={handleEndTime} 
+                                    value={test.endDate}
+                                    onChange={handleendDate} 
                                     renderInput={(params) => <TextField {...params} />}
                                     />
                                 </Grid>
@@ -192,8 +190,8 @@ export default function NewTest() {
                                         <FormControlLabel 
                                         control={
                                             <Checkbox 
-                                            name="branchspecific" 
-                                            checked={test.branchspecific} 
+                                            name="isBranchSpecific" 
+                                            checked={test.isBranchSpecific} 
                                             onChange={handlebranch} 
                                             inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -210,7 +208,7 @@ export default function NewTest() {
                                     id="branch"
                                     disableClearable
                                     autoComplete
-                                    disabled={!test.branchspecific}
+                                    disabled={!test.isBranchSpecific}
                                     includeInputInList
                                     value={test.branch}
                                     onChange={(e,newValue)=>handleSelectBranch(e,newValue)}
@@ -227,7 +225,7 @@ export default function NewTest() {
                                     id="Section"
                                     disableClearable
                                     autoComplete
-                                    disabled={!test.branchspecific}
+                                    disabled={!test.isBranchSpecific}
                                     includeInputInList
                                     value={test.section}
                                     onChange={(e,newValue)=>handleSelectSection(e,newValue)}
@@ -299,8 +297,8 @@ export default function NewTest() {
                                         fullWidth 
                                         autoComplete="off" 
                                         onChange={e => handleInputChange(e, i)} 
-                                        name="questiontitle" 
-                                        multiline value={q.questiontitle} 
+                                        name="title" 
+                                        multiline value={q.title} 
                                         />
                                     </Grid>
 
@@ -324,7 +322,7 @@ export default function NewTest() {
                                                         <Select
                                                         labelId="demo-simple-select-label"
                                                         id="demo-simple-select"
-                                                        value={q.mcqType}
+                                                        value={q.mcq}
                                                         label="MCQ Type"
                                                         size = "small"
                                                         onChange={(e) =>  mcqTypeChange(e, i)}
@@ -358,9 +356,9 @@ export default function NewTest() {
                                     </Grid>
 
                                 <Grid item xs={12} md={10} >
-                                    {q.mcqType == 'multiple' && 
+                                    {q.mcq == 'multiple' && 
                                         <FormGroup >
-                                        {q.options.map((op, o) => {
+                                        {q.mcqQuestions.map((op, o) => {
                                             return (
                                                 <Grid container spacing={1} alignItems="center" sx={{ my: 0.5 }} key={o} >
                                                     <Grid item xs={10}  >
@@ -368,7 +366,7 @@ export default function NewTest() {
                                                     <FormControlLabel 
                                                     control={
                                                         <Checkbox 
-                                                        checked={op.status} 
+                                                        checked={op.answer} 
                                                         onChange={e => handleOptionChange(e, i, o)} 
                                                         />
                                                     } 
@@ -377,11 +375,11 @@ export default function NewTest() {
                                                         id="outlined-basic" 
                                                         variant="outlined" 
                                                         autoComplete="off" 
-                                                        name="option" 
+                                                        name="mcqTitle" 
                                                         multiline size="small" 
                                                         color="info" 
                                                         onChange={e => handleOptionInputChange(e, i, o)} 
-                                                        value={op.option} 
+                                                        value={op.mcqTitle} 
                                                         sx={{ width: [300, 390, 500, 725] }} 
                                                         />
                                                     } 
@@ -401,15 +399,15 @@ export default function NewTest() {
                                     </FormGroup>    
                                     }
                                 
-                                {q.mcqType == 'single' && 
+                                {q.mcq == 'single' && 
                                     <RadioGroup
                                     className="noselect"
                                     aria-labelledby="demo-radio-buttons-group-label"
                                     name="checked"
-                                    value={q.options.findIndex(item => item.status == true)}
+                                    value={q.mcqQuestions.findIndex(item => item.answer == true)}
                                     onChange={(e) => onRadioChange(e, i)}
                                     >
-                                    {q.options.map((op, o) =>  (
+                                    {q.mcqQuestions.map((op, o) =>  (
                                         <Grid container spacing={1} alignItems="center" sx={{ my: 0.5 }} >
                                             <Grid item xs={10}  >
                                                 <FormControlLabel 
@@ -421,11 +419,11 @@ export default function NewTest() {
                                                         id="outlined-basic" 
                                                         variant="outlined" 
                                                         autoComplete="off" 
-                                                        name="option" 
+                                                        name="mcqTitle" 
                                                         multiline size="small" 
                                                         color="info" 
                                                         onChange={e => handleOptionInputChange(e, i, o)} 
-                                                        value={op.option} 
+                                                        value={op.mcqTitle} 
                                                         sx={{ width: [300, 390, 500, 725] }} 
                                                         />
                                                 }/>
