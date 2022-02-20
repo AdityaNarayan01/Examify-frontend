@@ -6,9 +6,9 @@ import { sample } from 'lodash';
 
 const users = [...Array(15)].map((_, index) => ({
   id: faker.datatype.uuid(),
-  // avatarUrl: mockImgAvatar(index + 1),
+  startdate: "5 Feb 2022",
+  starttime: "09:30:00",
   name: faker.name.findName(),
-  // company: faker.company.companyName(),
   marks: faker.datatype.number(),
   section: sample([
     "A1",

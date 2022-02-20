@@ -285,7 +285,7 @@ const TeacherMain = {
             startTime: 1645032710633,
             endTime: 1645032839514,
             branch: 'CSE',
-            section: 0,
+            section: 'A2',
             isBranch: false,
             totalMarks: 15,
             questions:[
@@ -331,7 +331,7 @@ const TeacherMain = {
             startTime: 1645032710633,
             endTime: 1645032839514,
             branch: 'CSE',
-            section: 0,
+            section: 'A1',
             isBranch: false,
             totalMarks: 15,
             questions:[
@@ -377,7 +377,7 @@ const TeacherMain = {
             startTime: 1645032710633,
             endTime: 1645032839514,
             branch: 'CSE',
-            section: 0,
+            section: 'A1',
             isBranch: false,
             totalMarks: 15,
             questions:[
@@ -423,7 +423,7 @@ const TeacherMain = {
             startTime: 1645032710633,
             endTime: 1645032839514,
             branch: 'CSE',
-            section: 0,
+            section: 'A2',
             isBranch: false,
             totalMarks: 15,
             questions:[

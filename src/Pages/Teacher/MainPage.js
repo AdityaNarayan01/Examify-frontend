@@ -1,15 +1,17 @@
-
+import React from 'react';
 import { Box, Grid, Container, Typography, Stack, Divider, Button } from '@mui/material';
 import Page from '../../components/Page';
 import { UpcomingTest,TestSubmiited,TodayTest,AppNewsUpdate ,UpcomingTestTable, SubmittedTestTable  } from '../../components/teacher';
 import { useHistory } from 'react-router-dom';
-
+import studentMain from '../../_mocks_/teacherMain';
 import Navbar from '../../components/student/navbar/Navbar';
 import faker from 'faker';
 
 
 export default function DashboardApp() {
     const history = useHistory();
+    const [todayTest] =  React.useState(studentMain.ongoingTest);
+    const [completedTest] =  React.useState(studentMain.completedTest);
     const arr = Array.from(Array(5).keys());
 
     return (
@@ -42,13 +44,10 @@ export default function DashboardApp() {
                     <Box sx={{ pt: 5, pb: 2}}>
                         <Typography variant="h4">Ongoing Test</Typography>
                     </Box>
-                    {arr.map(() => (
+                    {todayTest.map((data,index) => (
                         <AppNewsUpdate 
-                        duration="240 mins" 
-                        title="Compiler Design CT1" 
-                        startAt = {faker.date.soon()}
-                        endAt = {faker.date.soon()}
-                        type='ongoing'
+                        data = {data}
+                        index = {index}
                         />
                     ))}
                 </Grid>
@@ -68,8 +67,8 @@ export default function DashboardApp() {
                     </Box>
                 </Grid>
 
-        </Grid>
-      </Container>
+            </Grid>
+        </Container>
     </Page>
-  );
+    );
 }
