@@ -3,7 +3,7 @@ const data = {
         teacherAssigned: 'teacherId124',
         title: 'Compiler Design CT1',
         isduration: true,
-        duration: 90000,
+        duration: '90000',
         startDate: 1330194600000,
         endDate: 1330194600000,
         isBranchSpecific: true,
