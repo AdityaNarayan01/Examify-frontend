@@ -5,13 +5,11 @@ import { UpcomingTest,TestSubmiited,TodayTest,AppNewsUpdate ,UpcomingTestTable, 
 import { useHistory } from 'react-router-dom';
 import studentMain from '../../_mocks_/teacherMain';
 import Navbar from '../../components/student/navbar/Navbar';
-import faker from 'faker';
 
 
 export default function DashboardApp() {
     const history = useHistory();
     const [todayTest] =  React.useState(studentMain.ongoingTest);
-    const [completedTest] =  React.useState(studentMain.completedTest);
     const arr = Array.from(Array(5).keys());
 
     return (
