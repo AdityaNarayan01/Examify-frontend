@@ -1,9 +1,8 @@
 import { filter } from 'lodash';
 import { useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { Card, Table, Stack, Button, Checkbox, TableRow, TableBody, TableCell, Container, Typography, TableContainer
 } from '@mui/material';
-
 import Page from '../../components/Page';
 import SearchNotFound from '../../components/SearchNotFound';
 import { UserListHead, UserListToolbar } from '../../components/teacher/tablecomponent';
@@ -50,6 +49,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
+   const history = useHistory();
    const [order, setOrder] = useState('asc');
    const [orderBy, setOrderBy] = useState('name');
    const [filterName, setFilterName] = useState('');
@@ -115,7 +115,7 @@ export default function User() {
                                           <Button
                                              variant="contained"
                                              size="small"
-                                             to="#"
+                                             onClick = {() => history.push(`/TestResult/test1/${id}`)}
                                           > View</Button>
                                        </TableCell>
                                     </TableRow>
