@@ -11,6 +11,8 @@ import { LoadingButton } from '@mui/lab';
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import Logo from '../../components/Logo';
+import { useDispatch } from 'react-redux';
+import {StudentRegister} from '../../redux/actions/student/studentAuth';
 
 
 const HeaderStyle = styled('header')(({ theme }) => ({
@@ -57,7 +59,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 export default function Register() {
-	const navigate = useHistory();
+	const dispatch = useDispatch();
+    const history = useHistory();
+
 	const [showPassword, setShowPassword] = useState(false);
 
 	const RegisterSchema = Yup.object().shape({
@@ -73,8 +77,7 @@ export default function Register() {
 		initialValues: {firstName: '',lastName: '',email: '',password: '', branch: '', section: ''},
 		validationSchema: RegisterSchema,
 		onSubmit: async(values) => {
-			console.log(values);
-      		// navigate('/dashboard', { replace: true });
+			const errordata  = dispatch(StudentRegister(values, history));
 		}
 	});
 

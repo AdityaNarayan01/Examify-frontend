@@ -7,12 +7,12 @@ const initialstate = {
 const studentAuthReducer = (state = initialstate,action) => {
     switch(action.type) {
         case STUDENTLOGIN:
-            localStorage.setItem('authToken', action?.data?.token);
+            console.log('STUDENTLOGIN');
+            localStorage.setItem('authToken', action?.data);
             localStorage.setItem('type', 'student');
-            return {...state, token: action?.data?.token};
+            return {...state, token: action?.data};
 
         case STUDENTLOGINWITHOUTTOKEN:
-            localStorage.setItem('authToken', action?.data?.token);
             return {...state, token: action?.data?.token};
 
         case STUDENTLOGOUT:

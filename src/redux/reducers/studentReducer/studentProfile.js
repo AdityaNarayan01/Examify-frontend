@@ -7,7 +7,8 @@ const initialstate = {
 const studentProfileReducer = (state = initialstate,action) => {
     switch(action.type) {
         case STUDENTPROFILE :
-            return {...state, studentProfile: action?.data?.studentProfile};
+            console.log('STUDENTPROFILE');
+            return {...state, studentProfile: action?.data};
 
         default:
             return state;

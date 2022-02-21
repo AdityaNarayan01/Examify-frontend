@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://examifyexam.herokuapp.com/'})
+const API = axios.create({ baseURL: 'https://examifyexam.herokuapp.com'})
 
 //Branch
 export const getBranch = () => API.get('/branch');
@@ -8,7 +8,7 @@ export const getBranch = () => API.get('/branch');
 
 //Student
 export const studentRegister = (requestbody) => API.post(`/studentRegister`, requestbody);   
-export const studentVerifyRegister = (token) => API.get(`/studentVerify/${token}`);
+export const studentVerifyRegister = (token) => API.post(`/studentVerify/${token}`);
 export const studentLogin = (requestbody) => API.post(`/studentlogin`, requestbody);
 export const studentProfile = (token) => API.get(`/studentProfile`, {headers: { Authorization: `Bearer ${token}`}})
 export const studentTestSubmit = (requestbody, token) => API.post(`/studentTestSubmit`, requestbody, {headers: { Authorization: `Bearer ${token}`}})

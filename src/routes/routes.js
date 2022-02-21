@@ -8,6 +8,7 @@ import StudentTest from '../Pages/Student/Test';
 import StudentResult from '../Pages/Student/Result';
 import UpcomingTest from '../Pages/Student/UpcomingTestPage';
 import SubmittedTest from '../Pages/Student/SubmittedTestPage';
+import StudentVerify from '../Pages/Student/StudentVerify';
 
 //teacher
 import TeacherHome from '../Pages/Teacher/MainPage';
@@ -65,6 +66,13 @@ const routes = [
         component: SubmittedTest,
         protected: true,
         isStudent: true
+    },
+    {   
+        path: '/studentVerify/:id',
+        component: StudentVerify,
+        protected: false,
+        isStudent: true
+        
     },
     //teacher
     { 
