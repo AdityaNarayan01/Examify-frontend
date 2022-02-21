@@ -34,11 +34,11 @@ export const StudentVerify = (formData, router) => async (dispatch) =>  {
 }
 
 
-export const StudentLogin = (formData, router) => async (dispatch) => {
-    try {
-        const data = 
-export const studentLogin = (requestbody) => API.post(`/studentlogin`, requestbody);
-    } catch (error) {
-        dispatch({type: ERROR, message: error.message});
-    }
-}
+// export const StudentLogin = (formData, router) => async (dispatch) => {
+//     try {
+        
+
+//     } catch (error) {
+//         dispatch({type: ERROR, message: error.message});
+//     }
+// }
