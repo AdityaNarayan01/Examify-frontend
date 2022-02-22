@@ -5,13 +5,10 @@ import { Card, Stack, Link, Container, Typography,Checkbox,TextField,IconButton,
 import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import Logo from '../../components/Logo';
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
-import { StudentLogin } from '../../redux/actions/student/studentAuth';
+import { StudentForgot } from '../../redux/actions/student/studentAuth';
 import { useDispatch } from 'react-redux';
 
 
@@ -64,30 +61,25 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 
-export default function Login() {
+export default function Forgot() {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const [showPassword, setShowPassword] = useState(false);
-
+	
 	const LoginSchema = Yup.object().shape({
 		email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-		password: Yup.string().required('Password is required')
 	});
 
 	const formik = useFormik({
-		initialValues: {email: '',password: '',remember: true},
+		initialValues: {email: ''},
 		validationSchema: LoginSchema,
 		onSubmit: async(values) => {
-			console.log(values)
-			dispatch(StudentLogin(values, history));
+			dispatch(StudentForgot(values, history));
 		}
 	});
 
 	const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
-	const handleShowPassword = () => {
-		setShowPassword((show) => !show);
-	};
+	
 
 	return (
 		<RootStyle title="Student Login">
@@ -114,7 +106,7 @@ export default function Login() {
 
 				<Stack sx={{ mb: 5 }}>
 					<Typography variant="h4" gutterBottom>Login In Examify</Typography>
-					<Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+					<Typography sx={{ color: 'text.secondary' }}>Enter Your Email Below</Typography>
 				</Stack>
 
 				<FormikProvider value={formik}>
@@ -132,39 +124,15 @@ export default function Login() {
 							error={Boolean(touched.email && errors.email)}
 							helperText={touched.email && errors.email}
 							/>
-							
-							<TextField
-							fullWidth
-							autoComplete="current-password"
-							type={showPassword ? 'text' : 'password'}
-							label="Password"
-							{...getFieldProps('password')}
-							InputProps={{
-								endAdornment: (
-									<InputAdornment position="end">
-									<IconButton onClick={handleShowPassword} edge="end">
-									<Icon icon={showPassword ? eyeFill : eyeOffFill} />
-									</IconButton>
-									</InputAdornment>
-								)
-							}}
-							error={Boolean(touched.password && errors.password)}
-							helperText={touched.password && errors.password}
-							/>
 
 						</Stack>
 
 						<Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-							<FormControlLabel
-							control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-							label="Remember me"
-							/>
-							
-							<Link component={RouterLink} variant="subtitle2" to="/studentForgot">Forgot password?</Link>
+							<Link component={RouterLink} variant="subtitle2" to="/studentLogin">Login</Link>
 						</Stack>
 
 						<LoadingButton  fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-							Login
+							Submit
 						</LoadingButton>
 
 					</Form>
@@ -173,7 +141,7 @@ export default function Login() {
 				<MHidden width="smUp">
 					<Typography variant="body2" align="center" sx={{ mt: 3 }}>
 						Don’t have an account?&nbsp;
-						<Link variant="subtitle2" component={RouterLink} to="register">
+						<Link variant="subtitle2" component={RouterLink} to="/studentRegister">
 						Get started
 						</Link>
 					</Typography>

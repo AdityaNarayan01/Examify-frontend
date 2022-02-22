@@ -2,7 +2,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Card, Link, Container, Typography, Stack, TextField, IconButton, InputAdornment, InputLabel, MenuItem, Select, FormControl } from '@mui/material';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -13,6 +13,7 @@ import { MHidden } from '../../components/@material-extend';
 import Logo from '../../components/Logo';
 import { useDispatch } from 'react-redux';
 import {StudentRegister} from '../../redux/actions/student/studentAuth';
+import { useSelector } from 'react-redux';
 
 
 const HeaderStyle = styled('header')(({ theme }) => ({
@@ -61,6 +62,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Register() {
 	const dispatch = useDispatch();
     const history = useHistory();
+	const branches = useSelector((state) => state?.branch?.branch);
+	const [sections, setsections] = React.useState([]);
+
 
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -70,7 +74,7 @@ export default function Register() {
 		email: Yup.string().email('Email must be a valid email address').required('Email is required'),
 		password: Yup.string().required('Password is required'),
 		branch: Yup.string().required('Branch is required'),
-		section: Yup.number().required('Section is required'),
+		section: Yup.string().required('Section is required'),
 	});
 
 	const formik = useFormik({
@@ -81,7 +85,23 @@ export default function Register() {
 		}
 	});
 
-	const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+	
+
+	const { errors, touched, handleSubmit, isSubmitting, getFieldProps, handleChange } = formik;
+
+	const changesectionsarray = (event) => {
+		handleChange('branch')(event.target.value);
+		branches.forEach((b) => {
+			if(b.branchName === event.target.value){
+				setsections(b.sections);
+			}
+		})
+	}
+
+	const sectionChange = (event) => {
+		handleChange('section')(event.target.value);
+	}
+
 	
 	return (
 	<RootStyle title="Student Register">
@@ -176,29 +196,27 @@ export default function Register() {
 						label="Branch"
 						{...getFieldProps('branch')}
 						error={Boolean(touched.branch && errors.branch)}
+						onChange={changesectionsarray}
 						helperText={touched.branch && errors.branch}
 						>
 							<MenuItem value=""><em>None</em></MenuItem>
-							<MenuItem value={'Computer Science'}>CSE</MenuItem>
-							<MenuItem value={'Electornics '}>ECE</MenuItem>
-							<MenuItem value={'EEE'}>EEE</MenuItem>
+							{branches.map((b, index) => (<MenuItem key={index} value={b.branchName}>{b.branchName}</MenuItem>))}
 						</Select>
 					</FormControl>
 					
-					<FormControl fullWidth variant="standard">
-						<InputLabel id="demo-simple-select-helper-label">Section</InputLabel>
+					<FormControl fullWidth variant="standard" >
+						<InputLabel id="section">Section</InputLabel>
 						<Select
 						fullWidth
-						type="branch"
-						label="Branch"
+						type="section"
+						label="section"
 						{...getFieldProps('section')}
 						error={Boolean(touched.section && errors.section)}
+						onChange={sectionChange}
 						helperText={touched.section && errors.section}
 						>
 							<MenuItem value=""><em>None</em></MenuItem>
-							<MenuItem value={1}>1</MenuItem>
-							<MenuItem value={2}>2</MenuItem>
-							<MenuItem value={3}>3</MenuItem>
+							{sections.map((s, index) => (<MenuItem key={index} value={s}>{s}</MenuItem>))}
 						</Select>
 					</FormControl>
 

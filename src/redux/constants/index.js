@@ -8,3 +8,4 @@ export const STUDENTTEST = 'STUDENTTEST';
 export const STUDENTTESTANSWER = 'STUDENTTESTANSWER';
 export const STUDENTRESULT = 'STUDENTRESULT';
 export const ERROR  = 'ERROR';
+export const BRANCH = 'BRANCH';

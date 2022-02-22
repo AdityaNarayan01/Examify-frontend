@@ -10,6 +10,9 @@ export const getBranch = () => API.get('/branch');
 export const studentRegister = (requestbody) => API.post(`/studentRegister`, requestbody);   
 export const studentVerifyRegister = (token) => API.post(`/studentVerify/${token}`);
 export const studentLogin = (requestbody) => API.post(`/studentlogin`, requestbody);
+export const studentForgot = (requestbody) => API.post(`/studentForgot`, requestbody);
+export const studentReset = (token, requestbody) => API.post(`/studentReset/${token}`, requestbody);
+
 export const studentProfile = (token) => API.get(`/studentProfile`, {headers: { Authorization: `Bearer ${token}`}})
 export const studentTestSubmit = (requestbody, token) => API.post(`/studentTestSubmit`, requestbody, {headers: { Authorization: `Bearer ${token}`}})
 export const studentTestDetails = (token) => API.get(`/studentTestDetails`, {headers: { Authorization: `Bearer ${token}`}})

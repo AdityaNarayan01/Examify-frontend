@@ -9,6 +9,8 @@ import StudentResult from '../Pages/Student/Result';
 import UpcomingTest from '../Pages/Student/UpcomingTestPage';
 import SubmittedTest from '../Pages/Student/SubmittedTestPage';
 import StudentVerify from '../Pages/Student/StudentVerify';
+import StudentForgot from '../Pages/Student/Forgot';
+import StudentReset from '../Pages/Student/Reset';
 
 //teacher
 import TeacherHome from '../Pages/Teacher/MainPage';
@@ -74,6 +76,19 @@ const routes = [
         isStudent: true
         
     },
+    {   
+        path: '/studentForgot',
+        component: StudentForgot,
+        protected: false,
+        isStudent: true
+    },
+    {   
+        path: '/studentReset/:id',
+        component: StudentReset,
+        protected: false,
+        isStudent: true
+    },
+    
     //teacher
     { 
         path: '/TeacherHome',
