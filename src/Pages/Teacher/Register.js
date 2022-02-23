@@ -11,6 +11,10 @@ import { LoadingButton } from '@mui/lab';
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import Logo from '../../components/Logo';
+import { useDispatch } from 'react-redux';
+import {TeacherRegister} from '../../redux/actions/teacher/teacherAuth';
+import { useSelector } from 'react-redux';
+
 
 
 const HeaderStyle = styled('header')(({ theme }) => ({
@@ -57,7 +61,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 export default function Register() {
-	const navigate = useHistory();
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [sections, setsections] = useState([1,2,3,4,5,6,7]);
@@ -76,8 +81,7 @@ export default function Register() {
 		validationSchema: RegisterSchema,
 		onSubmit: async(values) => {
 			values.sections = value;
-			console.log(values);
-			navigate.push('/teacherHome');
+			const errordata  = dispatch(TeacherRegister(values, history));
 		}
 	});
 

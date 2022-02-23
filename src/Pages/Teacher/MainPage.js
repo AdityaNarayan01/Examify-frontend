@@ -1,13 +1,23 @@
 import React from 'react';
 import { Box, Grid, Container, Typography, Stack, Divider, Button } from '@mui/material';
 import Page from '../../components/Page';
-import { UpcomingTest,TestSubmiited,TodayTest,AppNewsUpdate ,UpcomingTestTable, SubmittedTestTable  } from '../../components/teacher';
+import { UpcomingTest,TestSubmiited,TodayTest,TestMissed,AppNewsUpdate ,UpcomingTestTable, SubmittedTestTable  } from '../../components/teacher';
 import { useHistory } from 'react-router-dom';
 import studentMain from '../../_mocks_/teacherMain';
 import Navbar from '../../components/student/navbar/Navbar';
+import { TeacherTestDetails } from '../../redux/actions/teacher/teacherTest';
+import { useDispatch ,useSelector } from 'react-redux';
 
 
 export default function DashboardApp() {
+
+    const dispatch = useDispatch();
+    const teacherTest = useSelector((state)=> state?.teacherTestDetails?.teacherTestDetails);
+    console.log(teacherTest);
+    React.useEffect(() => {
+        dispatch(TeacherTestDetails());
+    }, []);
+
     const history = useHistory();
     const [todayTest] =  React.useState(studentMain.ongoingTest);
     const arr = Array.from(Array(5).keys());
@@ -21,17 +31,19 @@ export default function DashboardApp() {
             </Box>
 
             <Grid container spacing={3}>
-
-                <Grid item xs={12} sm={4} md={4}>
-                    <TodayTest total={2}/>
+                <Grid item xs={12} sm={6} md={3}>
+                    <TestMissed total={0 ||teacherTest?.ongoingTest?.length}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <TodayTest total={0 ||teacherTest?.todayTest?.length}/>
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={4}>
-                    <UpcomingTest total={10}/>
+                <Grid item xs={12} sm={6} md={3}>
+                    <UpcomingTest total={0 ||teacherTest?.upcomingTest?.length}/>
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={4}>
-                    <TestSubmiited total={2}/>
+                <Grid item xs={12} sm={6} md={3}>
+                    <TestSubmiited total={0 ||teacherTest?.historyTest?.length}/>
                 </Grid>
 
                 <Box sx={{mx:5,mt:5}}>

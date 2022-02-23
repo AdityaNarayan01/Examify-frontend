@@ -22,6 +22,9 @@ import Result from '../Pages/Teacher/Result';
 import TeacherCompletedTest from '../Pages/Teacher/TeacherCompletedTest';
 import TeacherUpcomingTest from '../Pages/Teacher/TeacherUpcomingTest';
 import StudentTestResult from '../Pages/Teacher/StudentResult';
+import TeacherVerify from '../Pages/Teacher/TeacherVerify';
+import TeacherForgot from '../Pages/Teacher/Forgot';
+import TeacherReset from '../Pages/Teacher/Reset';
 
 
 const routes = [
@@ -142,6 +145,25 @@ const routes = [
         path: '/TestResult/:id/:sid',
         component: StudentTestResult,
         protected: true,
+        isStudent: false
+    },
+    {   
+        path: '/teacherVerify/:id',
+        component: TeacherVerify,
+        protected: false,
+        isStudent: false
+        
+    },
+    {   
+        path: '/teacherForgot',
+        component: TeacherForgot,
+        protected: false,
+        isStudent: false
+    },
+    {   
+        path: '/TeacherReset/:id',
+        component: TeacherReset,
+        protected: false,
         isStudent: false
     },
     {

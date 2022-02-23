@@ -10,6 +10,7 @@ import SnackBar from './Pages/Toast';
 import { useDispatch } from 'react-redux';
 import { Branch } from './redux/actions/student/studentAuth';
 import React from 'react';
+import { TeacherTestDetails } from './redux/actions/teacher/teacherTest';
 
 
 export default function App() {

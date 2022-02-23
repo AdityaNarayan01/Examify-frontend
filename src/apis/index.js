@@ -20,8 +20,10 @@ export const studentTestDetail = (testId, token) => API.get(`/studentResult/${te
 
 //Teacher
 export const teacherRegister = (requestbody) => API.post(`/teacherRegister`, requestbody);   
-export const teacherVerifyRegister = (token) => API.get(`/teacherVerify/${token}`);
+export const teacherVerifyRegister = (token) => API.post(`/teacherVerify/${token}`);
 export const teacherLogin = (requestbody) => API.post(`/teacherlogin`, requestbody);
+export const teacherForgot = (requestbody) => API.post(`/teacherForgot`, requestbody);
+export const teacherReset = (token, requestbody) => API.post(`/teacherReset/${token}`, requestbody);
 export const teacherProfile = (token) => API.get(`/teacherProfile`, {headers: { Authorization: `Bearer ${token}`}});
 export const teacherAddTest = (requestbody, token) => API.post(`/addTest`, requestbody, {headers: { Authorization: `Bearer ${token}`}});
 export const teacherUpdateTest = (requestbody, token) => API.put(`/updateTest`, requestbody, {headers: { Authorization: `Bearer ${token}`}});
@@ -30,3 +32,4 @@ export const teacherTestDetails = (token) => API.get(`/teacherTestDetails`, {hea
 export const teacherSpecificTest = (testId, token) => API.get(`/teacherSpecificTest/${testId}`, {headers: { Authorization: `Bearer ${token}`}});
 
 //one more api remaning
+export const specificStudentResult = (testId,studentId, token) => API.get(`/specificStudentResult/${testId}?studentId=${studentId}`, {headers: { Authorization: `Bearer ${token}`}});
