@@ -16,8 +16,8 @@ export const studentReset = (token, requestbody) => API.post(`/studentReset/${to
 export const studentProfile = (token) => API.get(`/studentProfile`, {headers: { Authorization: `Bearer ${token}`}})
 export const studentTestSubmit = (requestbody, token) => API.post(`/studentTestSubmit`, requestbody, {headers: { Authorization: `Bearer ${token}`}})
 export const studentTestDetails = (token) => API.get(`/studentTestDetails`, {headers: { Authorization: `Bearer ${token}`}})
-export const studentTestDetail = (testId, token) => API.get(`/studentResult/${testId}`, {headers: { Authorization: `Bearer ${token}`}})
-
+export const studentResult = (testId, token) => API.get(`/studentResult/${testId}`, {headers: { Authorization: `Bearer ${token}`}})
+export const studentTest = (testId, token) => API.get(`/specificTest/${testId}`, {headers: { Authorization: `Bearer ${token}`}})
 //Teacher
 export const teacherRegister = (requestbody) => API.post(`/teacherRegister`, requestbody);   
 export const teacherVerifyRegister = (token) => API.post(`/teacherVerify/${token}`);

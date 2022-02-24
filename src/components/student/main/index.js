@@ -1,5 +1,5 @@
 export { default as TestMissed } from './TestMissed';
-export { default as TestSubmiited } from './TestSubmiited';
+export { default as OngoingTest } from './ongoingTest';
 export { default as AppNewsUpdate } from './TestCard';
 export { default as UpcomingTest } from './UpcomingTest';
 export { default as MutipleCheck } from '../test/MultipleCheck';

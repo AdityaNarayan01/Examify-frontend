@@ -25,9 +25,9 @@ export default function AppTasks({title, marks, answered, mcqQuestions, dataQues
                     
                     label={
                         <Typography className="noselect" variant="body2" 
-                                sx={{...(index === answered[0] && ( mcq.answer ? { color: 'green' } : {color: 'red'} ))}}
+                                sx={{...(index === answered[0] && ( mcq.option ? { color: 'green' } : {color: 'red'} ))}}
                         >
-                            {mcq.mcqTitle}
+                            {mcq.option}
                         </Typography>
                         } 
                     disabled={true}

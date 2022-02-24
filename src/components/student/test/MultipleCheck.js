@@ -1,11 +1,17 @@
 
 import React from 'react';
 import {Box,Checkbox,Typography,FormControlLabel,Stack, Divider} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { StudentMultipleSingle } from '../../../redux/actions/student/studentTest';
 
 
 export default function AppTasks({questionindex, title, marks, mcqQuestions, disabled, correct}) {
 
-  const [checked, setchecked] = React.useState([]);
+  const dispatch = useDispatch();
+  const answers = useSelector((state) => state?.studentTestAnswer?.answer);
+  const [checked, setchecked] = React.useState([...answers[questionindex]]);
+
+  console.log(answers);
   
   const onchecksubmit = (event) => {
       const newchecked = checked;
@@ -19,10 +25,12 @@ export default function AppTasks({questionindex, title, marks, mcqQuestions, dis
         newchecked.push(event.target.value);
       }
 
+      var numberArray = newchecked.map(Number);
+
+      answers[questionindex] = numberArray ;
+
+      dispatch(StudentMultipleSingle(answers));
       setchecked(prevState => ([...newchecked]));
-      console.log('Dispatched from here');
-      console.log(`QuestionIndex : ${questionindex}`);
-      console.log(`checked Array : ${newchecked}`);
   }
 
 
@@ -50,7 +58,7 @@ export default function AppTasks({questionindex, title, marks, mcqQuestions, dis
                   <Typography className="noselect" variant="body2" 
                   // sx={{...(correct ? checked && {color: 'green'} : checked && {color: 'red'})}}
                   >
-                    {mcq.mcqTitle}
+                    {mcq.option}
                   </Typography>
                 }
               />

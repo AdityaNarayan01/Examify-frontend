@@ -1,19 +1,20 @@
 
 import React from 'react';
 import {Box,Typography,FormControlLabel, Divider, RadioGroup, Radio} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function AppTasks({questionindex, title, marks, mcqQuestions,  disabled, correct}) {
 
+    const dispatch = useDispatch();
+    const answers = useSelector((state) => state?.studentTestAnswer?.answer);
     const [checked, setchecked] = React.useState(-1);
 
+    console.log(answers);
+
     const oncheckSubmit = (event) => {
-        const prevcheck = checked;
+        answers[questionindex][0] = parseInt(event.target.value);
         setchecked(event.target.value);
-        console.log(`Dispatch Action from here`);
-        console.log(`question index : ${questionindex}`)
-        console.log(`prevcheck:${prevcheck}`)
-        console.log(`nowchcek: ${event.target.value}`)
     }
 
 
@@ -33,7 +34,7 @@ export default function AppTasks({questionindex, title, marks, mcqQuestions,  di
                 disabled={disabled}
             >
                 {mcqQuestions?.map((mcq, index) => (
-                    <FormControlLabel key={index} value={index} control={<Radio />} label={mcq.mcqTitle} />
+                    <FormControlLabel key={index} value={index} control={<Radio />} label={mcq.option} />
                 ))}
             </RadioGroup>
 

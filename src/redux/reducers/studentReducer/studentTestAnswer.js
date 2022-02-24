@@ -1,13 +1,13 @@
 import { STUDENTTESTANSWER } from '../../constants/index.js';
 
 const initialstate = {
-    studentTestAnswer: null
+    answer: []
 }
 
 const studentTestAnswer = (state = initialstate,action) => {
     switch(action.type) {
         case STUDENTTESTANSWER :
-            return {...state, studentTestAnswer: action?.data?.studentTestAnswer};
+            return {...state, answer: action?.data};
 
         default:
             return state;
