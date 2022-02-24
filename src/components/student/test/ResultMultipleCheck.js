@@ -28,13 +28,13 @@ export default function AppTasks({ title, marks, answered, mcqQuestions}) {
 
                         label={
                             <Typography className="noselect" variant="body2" 
-                                sx={{...(checked.includes(index) && ( mcq.answer ? { color: 'green' } : {color: 'red'} ))}}
+                                sx={{...(checked.includes(index) && ( mcq.status ? { color: 'green' } : {color: 'red'} ))}}
                             >
-                                {mcq.mcqTitle}
+                                {mcq.option}
                             </Typography>
                         }
                     />
-
+                    
                 </Stack>
             ))}
 

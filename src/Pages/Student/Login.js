@@ -11,6 +11,8 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import Logo from '../../components/Logo';
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
+import { StudentLogin } from '../../redux/actions/student/studentAuth';
+import { useDispatch } from 'react-redux';
 
 
 
@@ -63,7 +65,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 export default function Login() {
-	const navigate = useHistory();
+	const dispatch = useDispatch();
+	const history = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
 
 	const LoginSchema = Yup.object().shape({
@@ -76,9 +79,7 @@ export default function Login() {
 		validationSchema: LoginSchema,
 		onSubmit: async(values) => {
 			console.log(values)
-			localStorage.setItem('type', 'student');
-			localStorage.setItem('authToken', '123');
-			navigate.push('/studentHome');
+			dispatch(StudentLogin(values, history));
 		}
 	});
 
@@ -159,7 +160,7 @@ export default function Login() {
 							label="Remember me"
 							/>
 							
-							<Link component={RouterLink} variant="subtitle2" to="#">Forgot password?</Link>
+							<Link component={RouterLink} variant="subtitle2" to="/studentForgot">Forgot password?</Link>
 						</Stack>
 
 						<LoadingButton  fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>

@@ -2,7 +2,7 @@ import { Box, Stack, Button, Divider, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 
-export default function TestCard({data, duration, title, startAt, endAt, type, index}) {
+export default function TestCard({data, isbtn, index}) {
   const history = useHistory();
 
   const onTestStart = () => {
@@ -42,9 +42,12 @@ export default function TestCard({data, duration, title, startAt, endAt, type, i
                     </Typography>
 
             </Box>
-                <Button variant="contained" size="large" onClick  ={() => onTestStart()}>
+            {isbtn && 
+            <Button variant="contained" size="large" onClick  ={() => onTestStart()}>
                     Start Test
-                </Button>
+              </Button>
+            }
+                
         </Stack>
       </Stack>
       <Divider />

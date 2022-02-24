@@ -8,6 +8,9 @@ import StudentTest from '../Pages/Student/Test';
 import StudentResult from '../Pages/Student/Result';
 import UpcomingTest from '../Pages/Student/UpcomingTestPage';
 import SubmittedTest from '../Pages/Student/SubmittedTestPage';
+import StudentVerify from '../Pages/Student/StudentVerify';
+import StudentForgot from '../Pages/Student/Forgot';
+import StudentReset from '../Pages/Student/Reset';
 
 //teacher
 import TeacherHome from '../Pages/Teacher/MainPage';
@@ -19,6 +22,9 @@ import Result from '../Pages/Teacher/Result';
 import TeacherCompletedTest from '../Pages/Teacher/TeacherCompletedTest';
 import TeacherUpcomingTest from '../Pages/Teacher/TeacherUpcomingTest';
 import StudentTestResult from '../Pages/Teacher/StudentResult';
+import TeacherVerify from '../Pages/Teacher/TeacherVerify';
+import TeacherForgot from '../Pages/Teacher/Forgot';
+import TeacherReset from '../Pages/Teacher/Reset';
 
 
 const routes = [
@@ -66,6 +72,26 @@ const routes = [
         protected: true,
         isStudent: true
     },
+    {   
+        path: '/studentVerify/:id',
+        component: StudentVerify,
+        protected: false,
+        isStudent: true
+        
+    },
+    {   
+        path: '/studentForgot',
+        component: StudentForgot,
+        protected: false,
+        isStudent: true
+    },
+    {   
+        path: '/studentReset/:id',
+        component: StudentReset,
+        protected: false,
+        isStudent: true
+    },
+    
     //teacher
     { 
         path: '/TeacherHome',
@@ -119,6 +145,25 @@ const routes = [
         path: '/TestResult/:id/:sid',
         component: StudentTestResult,
         protected: true,
+        isStudent: false
+    },
+    {   
+        path: '/teacherVerify/:id',
+        component: TeacherVerify,
+        protected: false,
+        isStudent: false
+        
+    },
+    {   
+        path: '/teacherForgot',
+        component: TeacherForgot,
+        protected: false,
+        isStudent: false
+    },
+    {   
+        path: '/TeacherReset/:id',
+        component: TeacherReset,
+        protected: false,
         isStudent: false
     },
     {

@@ -4,16 +4,49 @@ import { Box, Grid, Container, Typography, Stack, Button, Divider } from '@mui/m
 import Page from '../../components/Page';
 import { MutipleCheck, SingleCheck } from '../../components/student/main';
 import newdata from '../../_mocks_/questiondata';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import { StudentAnswer, studentTest, submitTestAction } from '../../redux/actions/student/studentTest';
 
 export default function DashboardApp() {
+
+    const dispatch = useDispatch();
     const history = useHistory();
-    const [data, setdata] = React.useState(newdata)
+    const {id} = useParams();
+    const answers = useSelector((state) => state?.studentTestAnswer?.answer);
+    const [test, settest] = React.useState(null);
+    const [isloading, setLoading] = React.useState(true);
+
+    
+
     const [timeRemaining, settimeRemaining] = React.useState(240);
 
     const second = () => (new Date()).getUTCSeconds() % timeRemaining;
     const [time, setTime] = React.useState(second);
 
+    React.useEffect(() => {
+        const unloadCallback = (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        };
+    
+        window.addEventListener("beforeunload", unloadCallback);
+        return () => window.removeEventListener("beforeunload", unloadCallback);
+    }, []);
+
+    const getTestDetails = async() => {
+        const data = await dispatch(studentTest(id));
+        if(data){
+            settest(data?.data?.test);
+            dispatch(StudentAnswer(data?.data?.test));
+            setLoading(false);
+        }
+    }
+
+    React.useEffect(() => {
+        getTestDetails();
+    }, [id]);
 
 
     // React.useEffect(() => {
@@ -32,19 +65,31 @@ export default function DashboardApp() {
     //     })
     // }, [])
 
+
     const SubmitTest = () => {
-        console.log('Test Submitted');
-        history.push('/');
+        const date = new Date();
+        const submitTime = date.getTime();
+
+        const formData = { testId: id, submitTime: submitTime, endTime: test.endTime, answer: answers , totalMarks: test.totalMarks }
+        dispatch(submitTestAction(formData, history));
     }
 
 return (
-    <Page title={`Test | ${data?.title}`}>
-
+    <Page title={`Test | Student`}>
+        {isloading == true && 
         <Container maxWidth="xl" sx={{pb: 15}}>
+            <Box sx={{ pt: 15, pb: 5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                    <Typography className="noselect" variant="h4">Test is Loading Pls Wait</Typography>
+                    <Typography className="noselect" variant="h4">Loading...</Typography>
+            </Box>
+        </Container>
+        }
+        {isloading == false && 
+            <Container maxWidth="xl" sx={{pb: 15}}>
             <Box sx={{ pt: 15, pb: 5, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Box>
-                    <Typography className="noselect" variant="h4">{data?.title}</Typography>
-                    <Typography className="noselect" variant="h4">Total Marks: {data?.totalMarks}</Typography>
+                    <Typography className="noselect" variant="h4">{test?.title}</Typography>
+                    <Typography className="noselect" variant="h4">Total Marks: {test?.totalMarks}</Typography>
                 </Box>
                 <Typography className="noselect" variant="h4">Time Remaining : {timeRemaining - time}</Typography>
             </Box>
@@ -54,23 +99,22 @@ return (
             <Grid container spacing={3} sx={{pl:5, pr:5}}>
                 <Grid item xs={12} md={12} lg={12}>
 
-                    {data?.question.map((q, i) => (
+                    {test?.questions.map((q, i) => (
                         <Box key={i}>
                             {!q.mcqType ? 
                             <SingleCheck
                                 questionindex={i}
-                                title={q.title}
-                                marks={q.marks}
-                                mcqQuestions= {q.mcqQuestions}
+                                title={q.questionTitle}
+                                marks={q.questionMarks}
+                                mcqQuestions= {q.options}
                                 disabled={false}
                             /> : 
                             
                             <MutipleCheck
                                 questionindex={i}
-                                title={q.title}
-                                marks={q.marks}
-                                mcqQuestions= {q.mcqQuestions}
-                                disabled={false}
+                                title={q.questionTitle}
+                                marks={q.questionMarks}
+                                mcqQuestions= {q.options}
                                 disabled={false}
                             />}
                         </Box>
@@ -84,6 +128,8 @@ return (
         </Box>
 
         </Container>
+        }
+        
     </Page>
     );
 }
