@@ -9,7 +9,7 @@ import Navbar from '../../components/student/navbar/Navbar';
 
 export default function NewTest() {
     const tdate = new Date();
-    const [test,setTest] = useState({title:"", startDate:tdate, endDate:tdate, isBranchSpecific:false, branch:null, section:null ,isduration:false,duration:''});
+    const [test,setTest] = useState({title:"", startDate:tdate, endDate:tdate, isBranchSpecific:true, branch:null, section:null ,isduration:false,duration:''});
     const [questions, setQuestions] = useState([{ title: 'This is a Question', marks:"1",mcqType:false, mcq:'single', mcqQuestions: [{ mcqTitle: 'This is a Option', answer: true }] }]);
 
     const branchprops = {
@@ -196,7 +196,7 @@ export default function NewTest() {
                                             inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                         } 
-                                        label="Branch" 
+                                        label="Section" 
                                         />
                                     </FormGroup>
                                 </Grid>
@@ -208,7 +208,6 @@ export default function NewTest() {
                                     id="branch"
                                     disableClearable
                                     autoComplete
-                                    disabled={!test.isBranchSpecific}
                                     includeInputInList
                                     value={test.branch}
                                     onChange={(e,newValue)=>handleSelectBranch(e,newValue)}
