@@ -333,6 +333,10 @@ export default function NewTest() {
                             <Button variant="contained" size="large" color="info" onClick={handleSubmit}>Save</Button>
                             <Button variant="contained" size="large" onClick={handleAddClick}>Add Question</Button>
                         </Box>
+
+                        <Box sx={{ mt:10,px:0}}>
+                            <Typography align="center" variant="h4">Total Marks: {test.totalMarks}</Typography>
+                        </Box>
                     </Box>
 
                     <Box>
