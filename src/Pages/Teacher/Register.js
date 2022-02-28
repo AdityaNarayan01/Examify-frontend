@@ -1,6 +1,6 @@
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography, Stack, TextField, IconButton, InputAdornment, MenuItem,  FormControl, Autocomplete } from '@mui/material';
+import { Box, Card, Link, Container, Typography, Stack, TextField, IconButton, InputAdornment, MenuItem, FormControl, Autocomplete ,Select,InputLabel} from '@mui/material';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
@@ -12,7 +12,7 @@ import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import Logo from '../../components/Logo';
 import { useDispatch } from 'react-redux';
-import {TeacherRegister} from '../../redux/actions/teacher/teacherAuth';
+import { TeacherRegister } from '../../redux/actions/teacher/teacherAuth';
 import { useSelector } from 'react-redux';
 
 
@@ -65,7 +65,8 @@ export default function Register() {
 	const history = useHistory();
 
 	const [showPassword, setShowPassword] = useState(false);
-	const [sections, setsections] = useState([1,2,3,4,5,6,7]);
+	const branches = useSelector((state) => state?.branch?.branch);
+	const [sections, setsections] = useState([]);
 	const [value, setValue] = useState([]);
 
 	const RegisterSchema = Yup.object().shape({
@@ -77,181 +78,191 @@ export default function Register() {
 	});
 
 	const formik = useFormik({
-		initialValues: {firstName: '',lastName: '',email: '',password: '', branch: '', sections: []},
+		initialValues: { firstName: '', lastName: '', email: '', password: '', branch: '', sections: [] },
 		validationSchema: RegisterSchema,
-		onSubmit: async(values) => {
+		onSubmit: async (values) => {
 			values.sections = value;
-			const errordata  = dispatch(TeacherRegister(values, history));
+			const errordata = dispatch(TeacherRegister(values, history));
 		}
 	});
 
-	const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-	
+	const changesectionsarray = (event) => {
+		handleChange('branch')(event.target.value);
+		branches.forEach((b) => {
+			if(b.branchName === event.target.value){
+				setsections(b.sections);
+			}
+		})
+	}
+
+	const sectionChange = (event) => {
+		handleChange('section')(event.target.value);
+	}
+
+	const { errors, touched, handleSubmit, isSubmitting, getFieldProps,handleChange } = formik;
+
 	return (
-    <RootStyle title="Teacher Register">
-	
-		<HeaderStyle>
-			<RouterLink to="/"><Logo /></RouterLink>
+		<RootStyle title="Teacher Register">
+
+			<HeaderStyle>
+				<RouterLink to="/"><Logo /></RouterLink>
 				<MHidden width="smDown">
-        		<Typography variant="body2" sx={{mt: { md: -2 }}}>
-          			Already have an account? &nbsp;
-        			<Link underline="none" variant="subtitle2" component={RouterLink} to="/teacherLogin">
-          				Login
-        			</Link>
-        		</Typography>
-      		</MHidden>
-    	</HeaderStyle>
+					<Typography variant="body2" sx={{ mt: { md: -2 } }}>
+						Already have an account? &nbsp;
+						<Link underline="none" variant="subtitle2" component={RouterLink} to="/teacherLogin">
+							Login
+						</Link>
+					</Typography>
+				</MHidden>
+			</HeaderStyle>
 
-      <MHidden width="mdDown">
-        <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Teacher Registeration
-          </Typography>
-          <img alt="register" src="/static/illustrations/illustration_register.png" />
-        </SectionStyle>
-      </MHidden>
+			<MHidden width="mdDown">
+				<SectionStyle>
+					<Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+						Teacher Registeration
+					</Typography>
+					<img alt="register" src="/static/illustrations/illustration_register.png" />
+				</SectionStyle>
+			</MHidden>
 
-      <Container>
-        <ContentStyle>
-          <Box sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              Teacher Registeration
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Register to Examify
-            </Typography>
-          </Box>
+			<Container>
+				<ContentStyle>
+					<Box sx={{ mb: 5 }}>
+						<Typography variant="h4" gutterBottom>
+							Teacher Registeration
+						</Typography>
+						<Typography sx={{ color: 'text.secondary' }}>
+							Register to Examify
+						</Typography>
+					</Box>
 
-           <FormikProvider value={formik}>
-      		<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        	<Stack spacing={3}>
-          		<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            		<TextField
-              		fullWidth
-              		label="First name"
-              		{...getFieldProps('firstName')}
-              		error={Boolean(touched.firstName && errors.firstName)}
-              		helperText={touched.firstName && errors.firstName}
-            		/>
+					<FormikProvider value={formik}>
+						<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+							<Stack spacing={3}>
+								<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+									<TextField
+										fullWidth
+										label="First name"
+										{...getFieldProps('firstName')}
+										error={Boolean(touched.firstName && errors.firstName)}
+										helperText={touched.firstName && errors.firstName}
+									/>
 
-            		<TextField
-              		fullWidth
-              		label="Last name"
-              		{...getFieldProps('lastName')}
-              		error={Boolean(touched.lastName && errors.lastName)}
-              		helperText={touched.lastName && errors.lastName}
-            		/>
-          		</Stack>
+									<TextField
+										fullWidth
+										label="Last name"
+										{...getFieldProps('lastName')}
+										error={Boolean(touched.lastName && errors.lastName)}
+										helperText={touched.lastName && errors.lastName}
+									/>
+								</Stack>
 
-          		<TextField
-            		fullWidth
-            		autoComplete="username"
-            		type="email"
-            		label="Email address"
-            		{...getFieldProps('email')}
-            		error={Boolean(touched.email && errors.email)}
-            		helperText={touched.email && errors.email}
-          		/>
+								<TextField
+									fullWidth
+									autoComplete="username"
+									type="email"
+									label="Email address"
+									{...getFieldProps('email')}
+									error={Boolean(touched.email && errors.email)}
+									helperText={touched.email && errors.email}
+								/>
 
-          		<TextField
-            		fullWidth
-            		autoComplete="current-password"
-            		type={showPassword ? 'text' : 'password'}
-            		label="Password"
-            		{...getFieldProps('password')}
-            		InputProps={{
-              		endAdornment: (
-                	<InputAdornment position="end">
-                  		<IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    		<Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  		</IconButton>
-                	</InputAdornment>
-              		)
-            		}}
-            		error={Boolean(touched.password && errors.password)}
-            		helperText={touched.password && errors.password}
-          		/>
+								<TextField
+									fullWidth
+									autoComplete="current-password"
+									type={showPassword ? 'text' : 'password'}
+									label="Password"
+									{...getFieldProps('password')}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">
+												<IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+													<Icon icon={showPassword ? eyeFill : eyeOffFill} />
+												</IconButton>
+											</InputAdornment>
+										)
+									}}
+									error={Boolean(touched.password && errors.password)}
+									helperText={touched.password && errors.password}
+								/>
 
-				<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-					
-				 	<FormControl fullWidth variant="standard" >
-        				<TextField
-						select
-				  			fullWidth
-            				type="branch"
-            				label="Branch"
-            				{...getFieldProps('branch')}
-            				error={Boolean(touched.branch && errors.branch)}
-            				helperText={touched.branch && errors.branch}
-        				>
-          					<MenuItem value="">
-            						<em>None</em>
-          					</MenuItem>
-          					<MenuItem value={'Computer Science'}>Ten</MenuItem>
-          					<MenuItem value={'Electornics '}>Twenty</MenuItem>
-          					<MenuItem value={'EEE'}>Thirty</MenuItem>
-        				</TextField>
-					</FormControl>
-					
+								<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
 
-					
-				 		<Autocomplete
-        				multiple
-						fullWidth
-        				id="tags-outlined"
-        				options={sections}
-        				getOptionLabel={(sections) => sections.toString()}
-        				defaultValue={[]}
-        				filterSelectedOptions
-						onChange={(event, newValue) => {
-							setValue([...newValue,]);
-						  }}
-        				renderInput={(params) => (
-          					<TextField
-            				{...params}
-            				label="Sections"
-            				placeholder="Choose Sections"
-          				/>
-        				)}
-      					/>
-					
-				</Stack>
+									<FormControl fullWidth variant="standard" >
+										<InputLabel id="demo-simple-select-helper-label">Branch</InputLabel>
+										<Select
+											fullWidth
+											type="branch"
+											label="Branch"
+											{...getFieldProps('branch')}
+											error={Boolean(touched.branch && errors.branch)}
+											onChange={changesectionsarray}
+											helperText={touched.branch && errors.branch}
+										>
+											<MenuItem value=""><em>None</em></MenuItem>
+											{branches.map((b, index) => (<MenuItem key={index} value={b.branchName}>{b.branchName}</MenuItem>))}
+										</Select>
+									</FormControl>
 
-          		<LoadingButton
-            		fullWidth
-            		size="large"
-            		type="submit"
-            		variant="contained"
-            		loading={isSubmitting}
-          		>
-            		Register
-          		</LoadingButton>
-        	</Stack>
-      		</Form>
-    	</FormikProvider>
 
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
-            </Link>
-            &nbsp;and&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
-            </Link>
-            .
-          </Typography>
 
-          <MHidden width="smUp">
-            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
-              <Link to="/login" component={RouterLink}>
-                Login
-              </Link>
-            </Typography>
-          </MHidden>
-        </ContentStyle>
-      </Container>
-    </RootStyle>
-  );
+									<Autocomplete
+										multiple
+										fullWidth
+										id="tags-outlined"
+										options={sections}
+										getOptionLabel={(sections) => sections.toString()}
+										defaultValue={[]}
+										filterSelectedOptions
+										onChange={(event, newValue) => {
+											setValue([...newValue,]);
+										}}
+										renderInput={(params) => (
+											<TextField
+												{...params}
+												label="Sections"
+												placeholder="Choose Sections"
+											/>
+										)}
+									/>
+
+								</Stack>
+
+								<LoadingButton
+									fullWidth
+									size="large"
+									type="submit"
+									variant="contained"
+									loading={isSubmitting}
+								>
+									Register
+								</LoadingButton>
+							</Stack>
+						</Form>
+					</FormikProvider>
+
+					<Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+						By registering, I agree to Minimal&nbsp;
+						<Link underline="always" sx={{ color: 'text.primary' }}>
+							Terms of Service
+						</Link>
+						&nbsp;and&nbsp;
+						<Link underline="always" sx={{ color: 'text.primary' }}>
+							Privacy Policy
+						</Link>
+						.
+					</Typography>
+
+					<MHidden width="smUp">
+						<Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
+							Already have an account?&nbsp;
+							<Link to="/login" component={RouterLink}>
+								Login
+							</Link>
+						</Typography>
+					</MHidden>
+				</ContentStyle>
+			</Container>
+		</RootStyle>
+	);
 }

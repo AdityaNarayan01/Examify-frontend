@@ -41,7 +41,6 @@ export default function NewTest() {
         findTestData();
     }, [id]);
 
-    console.log(test);
     const branchprops = {
         options: branch,
         getOptionLabel: (option) => option,

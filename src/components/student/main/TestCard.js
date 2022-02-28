@@ -13,7 +13,7 @@ export default function TestCard({data, isbtn, index}) {
 
 
   const changeTimeStamptoDate = (timeStamp) => {
-    var date = new Date(timeStamp);
+    var date = new Date(timeStamp*1000);
     var str = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":";
 
     if(date.getMinutes() < 10)
