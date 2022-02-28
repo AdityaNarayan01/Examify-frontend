@@ -6,7 +6,7 @@ import Page from '../Page';
 import SearchNotFound from '../SearchNotFound';
 import { UserListHead, UserListToolbar } from './tablecomponent';
 import Navbar from './navbar/Navbar';
-import TeacherMain from '../../_mocks_/teacherMain';
+import { useSelector } from 'react-redux';
 
 
 const TABLE_HEAD = [
@@ -42,14 +42,15 @@ function applySortFilter(array, comparator, query) {
         return a[1] - b[1];
     });
     if (query) {
-        return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+        return filter(array, (_user) => _user.title.toLowerCase().indexOf(query.toLowerCase()) !== -1);
     }
     return stabilizedThis.map((el) => el[0]);
 }
 
 export default function User({isMain}) {
     const history = useHistory();
-    const [upcomingTest] = useState(TeacherMain.upcomingTest);
+    const teacherTest = useSelector((state)=> state.teacherTestDetails.upcomingTest);
+
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
@@ -64,19 +65,22 @@ export default function User({isMain}) {
         setFilterName(event.target.value);
     };
 
-    const filteredUsers = applySortFilter(upcomingTest, getComparator(order, orderBy), filterName);
+    const filteredUsers = applySortFilter(teacherTest, getComparator(order, orderBy), filterName);
 
     const isUserNotFound = filteredUsers.length === 0;
 
-    const changeTimeStamptoDate = (timeStamp) => {
-        var date = new Date(timeStamp);
-        var str = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":";
+    const changetimstamptoDate = (timestamp) => {
+        var date = new Date(timestamp*1000);
     
-        if(date.getMinutes() < 10)
-        str = str + "0";
-    
-        str = str + date.getMinutes();
-        return str;
+        return(date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+    }
+    const getDuration = (isDuration, duration) => {
+        if(!isDuration){
+            return "NA";
+        }
+        else{
+            return `${duration/1000} mins`
+        }
     }
 
     return (
@@ -108,52 +112,52 @@ export default function User({isMain}) {
 
                             <TableBody>
                             
-                            {upcomingTest && isMain == true && filteredUsers.slice(0, 5).map((row,i) => {
+                            {isMain == true && filteredUsers.slice(0, 5).map((row,index) => {
                                 return (
                                     <TableRow
                                     hover
-                                    key={i}
+                                    key={index}
                                     tabIndex={-1}
                                     role="checkbox"
                                     >
                                         <TableCell component="th" scope="row" >
-                                            <Typography variant="subtitle2" noWrap>{row?.title}</Typography>
+                                            <Typography variant="subtitle2" noWrap>{row.title}</Typography>
                                         </TableCell>
-                                        <TableCell align="left">{changeTimeStamptoDate(row?.startTime)}</TableCell>
-                                        <TableCell align="left">{changeTimeStamptoDate(row?.endTime)}</TableCell>
-                                        <TableCell align="left">{row?.branch}</TableCell>
-                                        <TableCell align="left">{row?.section}</TableCell>
+                                        <TableCell align="left">{changetimstamptoDate(row.startTime)}</TableCell>
+                                        <TableCell align="left">{changetimstamptoDate(row.endTime)}</TableCell>
+                                        <TableCell align="left">{row.branch}</TableCell>
+                                        <TableCell align="left">{row.section=="null"?'':row.section}</TableCell>
                                         <TableCell align="right">
-                                            <Button variant="contained" size="small" onClick = {() => history.push(`/UpdateTest/${i}`)}> Edit</Button>
+                                            <Button variant="contained" size="small" onClick = {() => history.push(`/UpdateTest/${row._id}`)}> Edit</Button>
                                         </TableCell>
                                     </TableRow>
                                 );
                             })}
 
-                            {isMain == false && filteredUsers.map((row,i) => {
+                            {isMain == false && filteredUsers.map((row,index) => {
                                 return (
                                     <TableRow
                                     hover
-                                    key={i}
+                                    key={index}
                                     tabIndex={-1}
                                     role="checkbox"
                                     >
                                         <TableCell component="th" scope="row" >
-                                            <Typography variant="subtitle2" noWrap>{row?.title}</Typography>
+                                            <Typography variant="subtitle2" noWrap>{row.title}</Typography>
                                         </TableCell>
-                                        <TableCell align="left">{changeTimeStamptoDate(row?.startTime)}</TableCell>
-                                        <TableCell align="left">{changeTimeStamptoDate(row?.endTime)}</TableCell>
-                                        <TableCell align="left">{row?.branch}</TableCell>
-                                        <TableCell align="left">{row?.section}</TableCell>
+                                        <TableCell align="left">{changetimstamptoDate(row.startTime)}</TableCell>
+                                        <TableCell align="left">{changetimstamptoDate(row.endTime)}</TableCell>
+                                        <TableCell align="left">{row.branch}</TableCell>
+                                        <TableCell align="left">{row.section=="null"?'':row.section}</TableCell>
                                         <TableCell align="right">
-                                            <Button variant="contained" size="small" onClick = {() => history.push(`/UpdateTest/${i}`)}>Edit</Button>
+                                            <Button variant="contained" size="small" onClick = {() => history.push(`/UpdateTest/${row._id}`)}>Edit</Button>
                                         </TableCell>
                                     </TableRow>
                                 );
                             })}
 
                             </TableBody>
-                            {upcomingTest && isUserNotFound && (
+                            {isUserNotFound && (
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align="center" colSpan={5} sx={{ py: 1 }}>
@@ -163,17 +167,6 @@ export default function User({isMain}) {
                                 </TableBody>
                             )}
 
-                            {!upcomingTest && (
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell align="center" colSpan={5} sx={{ py: 1 }}>
-                                        
-                                            <Typography variant="subtitle1" noWrap>No Upcoming Test</Typography>
-                                        
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            )}
                         </Table>
                     </TableContainer>
                 </Box>
