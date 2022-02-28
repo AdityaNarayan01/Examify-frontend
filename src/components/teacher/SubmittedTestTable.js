@@ -10,9 +10,9 @@ import { useSelector } from 'react-redux';
 
 
 const TABLE_HEAD = [
-    { id: 'name', label: 'Test Name', alignRight: false },
-    { id: 'starttime', label: 'StartTime', alignRight: false },
-    { id: 'endtime', label: 'EndTime', alignRight: false },
+    { id: 'title', label: 'Test Name', alignRight: false },
+    { id: 'startTime', label: 'StartTime', alignRight: false },
+    { id: 'endTime', label: 'EndTime', alignRight: false },
     { id: 'branch', label: 'Branch', alignRight: false },
     { id: 'section', label: 'Section', alignRight: false },
     { id: 'viewTest', label: 'View Result', alignRight: true },
@@ -51,8 +51,8 @@ export default function User({isMain}) {
     const history = useHistory();
     const teacherTest = useSelector((state)=> state.teacherTestDetails.historyTest);
 
-    const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('name');
+    const [order, setOrder] = useState('desc');
+    const [orderBy, setOrderBy] = useState('startTime');
     const [filterName, setFilterName] = useState('');
 
     const handleRequestSort = (event, property) => {
