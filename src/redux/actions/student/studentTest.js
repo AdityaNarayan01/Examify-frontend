@@ -89,7 +89,6 @@ export const submitTestAction = (formData , router) => async(dispatch) => {
       const token = await localStorage.getItem('authToken');
       const data = await api.studentTestSubmit(formData, token);
 
-      console.log(data);
       if (data.data.success == true) {
          dispatch({ type: ERROR, data: { message: 'Test Successfully Submitted', isopen: true, type: '' } });
          router.push('/studentHome');

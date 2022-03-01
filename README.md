@@ -1,1 +1,3 @@
 # Examify Frontend
+ -TotalMarks
+ -TimeTimer

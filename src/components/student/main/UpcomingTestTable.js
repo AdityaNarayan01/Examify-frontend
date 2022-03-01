@@ -68,7 +68,7 @@ export default function User({isMain}) {
     const isUserNotFound = filteredUsers.length === 0;
 
     const changetimstamptoDate = (timestamp) => {
-    var date = new Date(timestamp);
+    var date = new Date(timestamp*1000);
 
     return(date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
     }
@@ -125,7 +125,9 @@ export default function User({isMain}) {
                                         </TableCell>
                                         <TableCell align="left">{changetimstamptoDate(row.startTime)}</TableCell>
                                         <TableCell align="left">{changetimstamptoDate(row.endTime)}</TableCell>
-                                        <TableCell align="left">{getDuration(row.isDuration, row.duration)}</TableCell>
+                                        {row.isDuration &&
+                                            <TableCell align="left">{row.duration} min</TableCell>
+                                        }
                                     </TableRow>
                                 );
                             })}
@@ -143,7 +145,9 @@ export default function User({isMain}) {
                                         </TableCell>
                                         <TableCell align="left">{changetimstamptoDate(row.startTime)}</TableCell>
                                         <TableCell align="left">{changetimstamptoDate(row.endTime)}</TableCell>
-                                        <TableCell align="left">{getDuration(row.isDuration, row.duration)}</TableCell>
+                                        {row.isDuration &&
+                                            <TableCell align="left">{row.duration} min</TableCell>
+                                        }
                                     </TableRow>
                                 );
                             })}

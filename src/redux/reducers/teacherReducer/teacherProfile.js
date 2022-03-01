@@ -7,7 +7,6 @@ const initialstate = {
 const teacherProfileReducer = (state = initialstate,action) => {
     switch(action.type) {
         case TEACHERPROFILE :
-            console.log('TEACHERPROFILE');
             return {...state, teacherProfile: action?.data};
 
         default:

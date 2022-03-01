@@ -22,7 +22,6 @@ export const StudentVerify = (formData, router) => async (dispatch) =>  {
     try {
         
         const data = await api.studentVerifyRegister(formData);
-        console.log(data);
         if(data.data.success){
             router.push('/studentLogin')
         }else{
@@ -38,7 +37,6 @@ export const StudentVerify = (formData, router) => async (dispatch) =>  {
 export const StudentLogin = (formData, router) => async (dispatch) => {
     try {
         const data = await api.studentLogin(formData);
-        console.log(data);
         if(data.data.success){
             dispatch({type: STUDENTLOGIN, data: data?.data?.token});
             dispatch({type: STUDENTPROFILE, data: data?.data?.student});

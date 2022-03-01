@@ -2,21 +2,16 @@ import { Box, Stack, Button, Divider, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
 
-export default function TestCard({data,duration, title, startAt, endAt, type, index}) {
+export default function TestCard({data,isbtn, index}) {
   const history = useHistory();
 
   const onTestEdit = () => {
     console.log('disptach Action for Start Test', index);
-    history.push(`/UpdateTest/${index}`);
-  }
-
-  const onTestResult = () => {
-    console.log('dispatch Action for on Test Result', index);
-    history.push(`/Result/${index}`);
+    history.push(`/UpdateTest/${data._id}`);
   }
 
   const changeTimeStamptoDate = (timeStamp) => {
-    var date = new Date(timeStamp);
+    var date = new Date(timeStamp*1000);
     var str = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":";
 
     if(date.getMinutes() < 10)
@@ -35,13 +30,20 @@ export default function TestCard({data,duration, title, startAt, endAt, type, in
                         {data?.title}
                     </Typography>
 
-                    <Typography variant="subtitle2" noWrap>
-                        Exam Duration: {Math.round((data?.endTime - data?.startTime)/1000)} mins
+                    {data.isDuration && 
+                      <Typography variant="subtitle2" noWrap>
+                        Exam Duration: {data.duration} mins
                     </Typography>
+                    }
                     <Typography variant="subtitle2" sx={{ color: 'text.secondary' }} noWrap>
                         {changeTimeStamptoDate(data?.startTime)} - {changeTimeStamptoDate(data?.endTime)}
                     </Typography>
-              </Box>         
+              </Box>      
+              {isbtn && 
+              <Button variant="contained" size="large" onClick  ={() => onTestEdit()}>
+                    Edit Test
+              </Button>
+            }   
         </Stack>
       </Stack>
       <Divider />

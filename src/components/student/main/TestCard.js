@@ -7,13 +7,14 @@ export default function TestCard({data, isbtn, index}) {
 
   const onTestStart = () => {
     console.log('disptach Action for Start Test', index);
-    history.push(`/StudentTest/${index}`);
+    console.log(data);
+    history.push(`/StudentTest/${data._id}`);
   }
 
 
 
   const changeTimeStamptoDate = (timeStamp) => {
-    var date = new Date(timeStamp);
+    var date = new Date(timeStamp*1000);
     var str = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" "+date.getHours()+":";
 
     if(date.getMinutes() < 10)
@@ -33,9 +34,11 @@ export default function TestCard({data, isbtn, index}) {
                         {data?.title}
                     </Typography>
 
-                    <Typography variant="subtitle2" noWrap>
-                        Exam Duration: {Math.round((data?.endTime - data?.startTime)/1000)} mins
+                    {data.isDuration && 
+                      <Typography variant="subtitle2" noWrap>
+                        Exam Duration: {data.duration} mins
                     </Typography>
+                    }
 
                     <Typography variant="subtitle2" sx={{ color: 'text.secondary' }} noWrap>
                         {changeTimeStamptoDate(data?.startTime)} - {changeTimeStamptoDate(data?.endTime)}

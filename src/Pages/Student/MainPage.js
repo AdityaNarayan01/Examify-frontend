@@ -18,7 +18,6 @@ export default function DashboardApp() {
 
     const studentTest = useSelector((state) => state?.studentTestDetails);
 
-
     React.useEffect(() => {
         dispatch(StudentTestDetails());
     }, [])
@@ -56,14 +55,14 @@ export default function DashboardApp() {
                         <Typography variant="h4">Ongoing Test</Typography>
                     </Box>
 
-                    {studentTest.todayTest.length == 0 && 
+                    {studentTest.ongoingTest.length == 0 && 
                         <Box sx={{ pt: 3, pb: 2, mr:'auto', ml:'auto'}}>
                             <Typography  align="center" variant="h5">No Ongoing Test</Typography>
                             <Divider />
                         </Box>
                     }
 
-                    {studentTest.todayTest.map((data, index) => (
+                    {studentTest.ongoingTest.map((data, index) => (
                         <AppNewsUpdate
                         data = {data}
                         index = {index}
@@ -73,14 +72,14 @@ export default function DashboardApp() {
 
                 </Grid>
                 
-                {studentTest.ongoingTest.length > 0 && 
+                {studentTest.todayTest.length > 0 && 
                     <Grid item xs={12} md={12} lg={12}>
 
                     <Box sx={{ pt: 5, pb: 2}}>
                         <Typography variant="h4">Today Test</Typography>
                     </Box>
                     
-                    {studentTest.ongoingTest.map((data, index) => (
+                    {studentTest.todayTest.map((data, index) => (
                         <AppNewsUpdate
                         data = {data}
                         index = {index}
