@@ -1,3 +1,3 @@
 # Examify Frontend
- -TotalMarks
- -TimeTimer
+ - TimeTimer
+ - MissedTest / Completed Test (Student)
