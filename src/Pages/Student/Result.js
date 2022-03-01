@@ -46,7 +46,6 @@ export default function Result() {
             
             <Grid container spacing={3} sx={{pl:5, pr:5}}>
                 <Grid item xs={12} md={12} lg={12}>
-
                     {result?.testId.questions.map((q, i) => (
                         <Box key={i}>
                             {!q.mcqType ? 

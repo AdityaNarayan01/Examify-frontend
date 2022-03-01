@@ -50,7 +50,6 @@ function applySortFilter(array, comparator, query) {
 export default function User({isMain}) {
     const history = useHistory();
     const teacherTest = useSelector((state)=> state.teacherTestDetails.historyTest);
-
     const [order, setOrder] = useState('desc');
     const [orderBy, setOrderBy] = useState('startTime');
     const [filterName, setFilterName] = useState('');
@@ -128,7 +127,7 @@ export default function User({isMain}) {
                                         <TableCell align="left">{row.branch}</TableCell>
                                         <TableCell align="left">{row.section=="null"?'':row.section}</TableCell>
                                         <TableCell align="right">
-                                            <Button variant="contained" size="small" onClick = {() => history.push(`/Result/${index}`)} > View</Button>
+                                            <Button variant="contained" size="small" onClick = {() => history.push(`/Result/${row._id}`)} > View</Button>
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -150,7 +149,7 @@ export default function User({isMain}) {
                                         <TableCell align="left">{row.branch}</TableCell>
                                         <TableCell align="left">{row.section=="null"?'':row.section}</TableCell>
                                         <TableCell align="right">
-                                            <Button variant="contained" size="small" onClick = {() => history.push(`/Result/${index}`)} > View</Button>
+                                            <Button variant="contained" size="small" onClick = {() => history.push(`/Result/${row._id}`)} > View</Button>
                                         </TableCell>
                                     </TableRow>
                                 );

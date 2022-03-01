@@ -119,10 +119,6 @@ export default function NewTest() {
     }
 
     const handleAddClick = () => {
-        setTest((prevState)=>({
-            ...prevState,
-            totalMarks: test.totalMarks + 1
-        }));
         setQuestions([...questions, { questionTitle: 'This is a Question', questionMarks: 1, mcq: 'single', mcqType: false, options: [{ option: 'This is a Option', status: true }] }]);
     }
 
@@ -130,6 +126,11 @@ export default function NewTest() {
     const handleSubmit = () => {
         if(!test.isBranch) test.section = null;
         if(!test.isDuration) test.duration = null;
+        let total = 0;
+        questions.forEach((ques,index)=>{
+            total += parseInt(ques.questionMarks);
+        });
+        test.totalMarks = total;
         const formData = {testId:id,title:test.title ,startTime:test.startTime,endTime:test.endTime,branch:test.branch,isBranch:test.isBranch,section:test.section,totalMarks:test.totalMarks,isDuration:test.isDuration,duration:parseInt(test.duration),questions:questions};
         dispatch(TeacherUpdateTest(formData, history));
     }
@@ -148,12 +149,6 @@ export default function NewTest() {
 
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
-        if(name =='questionMarks') {
-            setTest((prevState)=>({
-                ...prevState,
-                totalMarks: test.totalMarks - parseInt(questions[index].questionMarks) +  parseInt(value)
-            }));
-        }
         const list = [...questions];
         list[index][name] = value;
         setQuestions(list);
@@ -167,10 +162,6 @@ export default function NewTest() {
     }
 
     const handleDeleteQuestion = (i) => {
-        setTest((prevState)=>({
-            ...prevState,
-            totalMarks: test.totalMarks - parseInt(questions[i].questionMarks)
-        }));
         const list = [...questions];
         list.splice(i, 1);
         setQuestions(list);
@@ -333,9 +324,6 @@ export default function NewTest() {
                             <Button variant="contained" size="large" onClick={handleAddClick}>Add Question</Button>
                         </Box>
 
-                        <Box sx={{ mt:10,px:0}}>
-                            <Typography align="center" variant="h4">Total Marks: {test.totalMarks}</Typography>
-                        </Box>
                     </Box>
 
                     <Box>

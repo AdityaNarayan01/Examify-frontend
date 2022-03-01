@@ -69,7 +69,6 @@ export const TeacherReset = (token, formData, router) => async (dispatch) => {
    try {
 
       const data = await api.teacherReset(token, formData);
-      console.log(data?.data);
       if (data.data.success) {
          router.push('/TeacherLogin')
       } else {

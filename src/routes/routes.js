@@ -142,7 +142,7 @@ const routes = [
         isStudent: false
     },
     { 
-        path: '/TestResult/:id/:sid',
+        path: '/TestResult/:id',
         component: StudentTestResult,
         protected: true,
         isStudent: false

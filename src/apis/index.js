@@ -32,4 +32,4 @@ export const teacherTestDetails = (token) => API.get(`/teacherTestDetails`, {hea
 export const teacherSpecificTest = (testId, token) => API.get(`/teacherSpecificTest/${testId}`, {headers: { Authorization: `Bearer ${token}`}});
 
 //one more api remaning
-export const specificStudentResult = (testId,studentId, token) => API.get(`/specificStudentResult/${testId}?studentId=${studentId}`, {headers: { Authorization: `Bearer ${token}`}});
+export const specificStudentResult = (id, token) => API.get(`/studentSpecificResult/${id}`, {headers: { Authorization: `Bearer ${token}`}});

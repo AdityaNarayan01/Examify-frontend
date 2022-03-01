@@ -6,6 +6,7 @@ import {Box,Typography,FormControlLabel, Divider, RadioGroup, Radio} from '@mui/
 export default function AppTasks({title, marks, answered, mcqQuestions, dataQuestions,  disabled, correct}) {
 
     const [checked] = React.useState(answered[0]);
+    
 
     return (
         <Box sx={{ px: 3, py: 1, mt: 3 }}>
@@ -20,12 +21,13 @@ export default function AppTasks({title, marks, answered, mcqQuestions, dataQues
                 name="checked"
                 value={checked}
             >
+
                 {mcqQuestions?.map((mcq, index) => (
                     <FormControlLabel key={index} value={index} control={<Radio />} 
                     
                     label={
                         <Typography className="noselect" variant="body2" 
-                                sx={{...(index === answered[0] && ( mcq.option ? { color: 'green' } : {color: 'red'} ))}}
+                                sx={{...(index === answered[0] && ( mcq.status ? { color: 'green' } : {color: 'red'} ))}}
                         >
                             {mcq.option}
                         </Typography>

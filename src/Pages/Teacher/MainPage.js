@@ -13,7 +13,6 @@ export default function DashboardApp() {
 
     const dispatch = useDispatch();
     const teacherTest = useSelector((state)=> state.teacherTestDetails);
-    console.log(teacherTest);
     React.useEffect(() => {
         dispatch(TeacherTestDetails());
     }, []);

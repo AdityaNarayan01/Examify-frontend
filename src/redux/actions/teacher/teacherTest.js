@@ -7,7 +7,6 @@ export const TeacherTestDetails = () => async (dispatch) => {
    try {
       const token = await localStorage.getItem('authToken');
       const data = await api.teacherTestDetails(token);
-      console.log(data);
       if (data.data.success == true) {
          dispatch({ type: TEACHERTESTDETAILS, data: data?.data})
       } else {
@@ -21,20 +20,16 @@ export const TeacherTestDetails = () => async (dispatch) => {
 
 export const TeacherAddTest = (formData, router) => async (dispatch) => {
    try {
-      console.log(formData);
       const token = await localStorage.getItem('authToken');
       const data = await api.teacherAddTest(formData,token);
-      console.log(data);
 
       if (data.data.success == true) {
          router.push('/TeacherHome')
       } else {
-         console.log(data);
          dispatch({ type: ERROR, data: { message: data?.data?.message, isopen: true, type: '' } });
          return { data, success: false };
       }
    } catch (error) {
-      console.log(error);
       dispatch({ type: ERROR, data: { message: error.message, isopen: true, type: '' } });
    }
 }
@@ -72,7 +67,6 @@ export const TeacherDeleteTest = (formData, router) => async (dispatch) => {
 export const TeacherSpecificTest = (formData) => async (dispatch) => {
    try {
       const token = await localStorage.getItem('authToken');
-      console.log(token,formData);
       const data = await api.teacherSpecificTest(formData,token);
       if (data.data.success == true) {
          return {success: true, data: data?.data}
@@ -85,12 +79,12 @@ export const TeacherSpecificTest = (formData) => async (dispatch) => {
    }
 }
 
-export const SpecificStudentResult = (formData, router) => async (dispatch) => {
+export const SpecificStudentResult = (formData) => async (dispatch) => {
    try {
       const token = await localStorage.getItem('authToken');
       const data = await api.specificStudentResult(formData,token);
       if (data.data.success == true) {
-         router.push('/TeacherHome')
+         return {success: true, data: data?.data?.result}
       } else {
          dispatch({ type: ERROR, data: { message: data?.data?.message, isopen: true, type: '' } });
          return { data, success: false };

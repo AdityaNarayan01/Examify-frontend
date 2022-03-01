@@ -17,7 +17,6 @@ export default function DashboardApp() {
     const dispatch = useDispatch();
 
     const studentTest = useSelector((state) => state?.studentTestDetails);
-    console.log(studentTest);
 
     React.useEffect(() => {
         dispatch(StudentTestDetails());
