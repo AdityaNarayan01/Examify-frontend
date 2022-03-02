@@ -33,12 +33,9 @@ export default function DashboardNavbar({isHome}) {
             <ToolbarStyle>
                 <RouterLink to='/'><Logo /></RouterLink>
                 <Box sx={{ flexGrow: 1 }} />
+
+                {isHome !== true && <AccountPopover name ="Yogesh" email="yashrdr11@gmail.com" />}
                 
-                {isHome === false && 
-                    <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-                        <AccountPopover name ="Yogesh" email="yashrdr11@gmail.com" />
-                    </Stack>
-                }
 
                 {
                     isHome === true &&
