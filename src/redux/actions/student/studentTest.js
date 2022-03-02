@@ -12,15 +12,17 @@ export const StudentTestDetails = () => async (dispatch) => {
 
       var ongoingTest = [];
       var testSubmitted = [];
-
+      var on = 0;
 
 
       testData?.ongoingTest.forEach((i, index) => {
          const ongoing = {...i, status: true}
          ongoingTest.push(ongoing)
+         on = on+1;
 
          testData?.testGiven.forEach((j) => {
                if(i._id === j.testId){
+                  on = on-1;
                   ongoingTest[index].status = false;
                   const testPush = {...i, marks: 'Marks wll displayed soon', testSubmitId: 'none', status: true};
                   testSubmitted.push(testPush);
@@ -43,7 +45,7 @@ export const StudentTestDetails = () => async (dispatch) => {
       missedTest = testData?.historyTest?.length - testSubmitted.length;
 
       if(testData?.success == true){
-         dispatch({ type: STUDENTTESTDETAILS, data: testData, testSubmitted, missedTest, ongoingTest})
+         dispatch({ type: STUDENTTESTDETAILS, data: testData, testSubmitted, missedTest, ongoingTest, on})
       }else{
          dispatch({ type: ERROR, data: { message: data?.data?.message, isopen: true, type: '' } });
          return { data, success: false };

@@ -5,13 +5,14 @@ const initialstate = {
     todayTest:[],
     upcomingTest: [],
     testSubmitted:[],
-    missedTest:[]
+    missedTest:0,
+    on: 0
 }
 
 const studentTestDetails = (state = initialstate,action) => {
     switch(action.type) {
         case STUDENTTESTDETAILS :
-            return {...state, ongoingTest: action?.ongoingTest, todayTest: action?.data?.todayTest, upcomingTest: action?.data?.upcomingTest, testSubmitted: action?.testSubmitted, missedTest: action?.missedTest};
+            return {...state, ongoingTest: action?.ongoingTest, todayTest: action?.data?.todayTest, upcomingTest: action?.data?.upcomingTest, testSubmitted: action?.testSubmitted, missedTest: action?.missedTest, on: action?.on};
 
         default:
             return state;

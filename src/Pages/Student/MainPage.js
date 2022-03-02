@@ -45,7 +45,7 @@ export default function DashboardApp() {
             <Grid container spacing={3}>
 
                 <Grid item xs={12} sm={6} md={3}>
-                    <OngoingTest total={studentTest.ongoingTest.length}/>
+                    <OngoingTest total={studentTest.on}/>
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={3}>
