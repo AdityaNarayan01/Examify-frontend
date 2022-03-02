@@ -122,6 +122,7 @@ export default function User({isMain}) {
                                         <Button
                                         variant="contained"
                                         size="small"
+                                        disabled = {row.status}
                                         onClick = {() => history.push(`/StudentResult/${row.testSubmitId}`)}
                                         > 
                                             View
@@ -149,6 +150,7 @@ export default function User({isMain}) {
                                         <Button
                                         variant="contained"
                                         size="small"
+                                        disabled = {row.status}
                                         onClick = {() => history.push(`/StudentResult/${row.testSubmitId}`)}
                                         > 
                                             View

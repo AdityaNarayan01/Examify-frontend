@@ -40,6 +40,8 @@ export const StudentLogin = (formData, router) => async (dispatch) => {
         if(data.data.success){
             dispatch({type: STUDENTLOGIN, data: data?.data?.token});
             dispatch({type: STUDENTPROFILE, data: data?.data?.student});
+            localStorage.setItem('name', data?.data?.student?.name);
+            localStorage.setItem('email', data?.data?.student?.email);
             router.push('/studentHome')
         }else{
             dispatch({type: ERROR, data:{message: data?.data?.message, isopen: true, type: ''}});

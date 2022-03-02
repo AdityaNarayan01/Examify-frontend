@@ -38,6 +38,8 @@ export const TeacherLogin = (formData, router) => async (dispatch) => {
       if (data.data.success) {
          dispatch({ type: TEACHERLOGIN, data: data?.data?.token });
          dispatch({ type: TEACHERPROFILE, data: data?.data?.teacher });
+         localStorage.setItem('name', data?.data?.teacher?.name);
+         localStorage.setItem('email', data?.data?.teacher?.email);
          router.push('/TeacherHome')
       } else {
          dispatch({ type: ERROR, data: { message: data?.data?.message, isopen: true, type: '' } });
