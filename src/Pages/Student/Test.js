@@ -79,8 +79,24 @@ export default function DashboardApp() {
         })
     }, [isloading])
 
+    // const timeParser  = (duration) => {
 
-    
+    //     var time = duration;
+        
+    //     var timeString = "";
+
+    //     var mins = Math.round(time % 60);
+    //     timeString  = mins.toString() + "mins" + timeString;
+    //     time = time/60;
+
+    //     if(time > 0){
+    //         var hours = Math.round(time % 24);
+    //         timeString = hours.toString() + "hrs" + timeString;
+    //     }
+        
+    //     return timeString;
+    // }
+        
 
 return (
     <Page title={`Test | Student`}>
@@ -97,9 +113,9 @@ return (
             <Box sx={{ pt: 15, pb: 5, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Box>
                     <Typography className="noselect" variant="h4">{test?.title}</Typography>
-                    <Typography className="noselect" variant="h4">Total Marks: {test?.totalMarks} mins</Typography>
+                    <Typography className="noselect" variant="h4">Total Marks: {test?.totalMarks} Marks</Typography>
                 </Box>
-                <Typography className="noselect" variant="h4">Time Remaining : {timeRemaining}</Typography>
+                <Typography className="noselect" variant="h4">Time Remaining : {timeRemaining} mins</Typography>
             </Box>
 
             <Divider />

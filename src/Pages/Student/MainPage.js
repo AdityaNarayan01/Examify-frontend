@@ -22,9 +22,9 @@ export default function DashboardApp() {
     }, [])
 
     React.useEffect(() => {
-        const timer = setTimeout(() => {
+        const timer = setInterval(() => {
             dispatch(StudentTestDetails());
-        }, 60000)
+        },10000)
 
         return (() => {
             clearInterval(timer);
@@ -65,7 +65,7 @@ export default function DashboardApp() {
                         <Typography variant="h4">Ongoing Test</Typography>
                     </Box>
 
-                    {studentTest.ongoingTest.length == 0 && 
+                    {studentTest.on == 0 && 
                         <Box sx={{ pt: 3, pb: 2, mr:'auto', ml:'auto'}}>
                             <Typography  align="center" variant="h5">No Ongoing Test</Typography>
                             <Divider />
