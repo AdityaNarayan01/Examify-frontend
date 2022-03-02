@@ -37,7 +37,6 @@ export default function DashboardNavbar({isHome}) {
                 {isHome === false && 
                     <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
                         <AccountPopover name ="Yogesh" email="yashrdr11@gmail.com" />
-                        
                     </Stack>
                 }
 

@@ -9,22 +9,41 @@ export const StudentTestDetails = () => async (dispatch) => {
       const data = await api.studentTestDetails(token);
 
       const testData = data?.data;
+
+      var ongoingTest = [];
       var testSubmitted = [];
-      var missedTest = [];
+
+
+
+      testData?.ongoingTest.forEach((i, index) => {
+         const ongoing = {...i, status: true}
+         ongoingTest.push(ongoing)
+
+         testData?.testGiven.forEach((j) => {
+               if(i._id === j.testId){
+                  ongoingTest[index].status = false;
+                  const testPush = {...i, marks: 'Marks wll displayed soon', testSubmitId: 'none', status: true};
+                  testSubmitted.push(testPush);
+               }
+         })
+      })
+      
+      
+      var missedTest = 0;
 
       testData?.historyTest.forEach((i) => {
          testData?.testGiven.forEach((j) => {
             if(i._id == j.testId){
-               const testPush = {...i, marks: j.marks, testSubmitId: j._id};
+               const testPush = {...i, marks: j.marks, testSubmitId: j._id, status: false};
                testSubmitted.push(testPush);
-            }else{
-               missedTest.push(j);
             }
          })
       })
 
+      missedTest = testData?.historyTest?.length - testSubmitted.length;
+
       if(testData?.success == true){
-         dispatch({ type: STUDENTTESTDETAILS, data: testData, testSubmitted, missedTest})
+         dispatch({ type: STUDENTTESTDETAILS, data: testData, testSubmitted, missedTest, ongoingTest})
       }else{
          dispatch({ type: ERROR, data: { message: data?.data?.message, isopen: true, type: '' } });
          return { data, success: false };
@@ -52,18 +71,25 @@ export const StudentResult = (formData) => async (dispatch) => {
 }
 
 
-export const studentTest = (formData) => async(dispatch) => {
+export const studentTest = (formData, router) => async(dispatch) => {
    try {
       const token = await localStorage.getItem('authToken');
       const data = await api.studentTest(formData, token);
       if (data.data.success == true) {
+         const nowTimeStamp = new Date().getTime()/1000;
+         if(nowTimeStamp > data.data.test.endTime){
+            dispatch({ type: ERROR, data: { message: 'Test Time Exhausted', isopen: true, type: '' } });
+            router.push('/studentHome');
+         }
+
          return {success: true, data: data?.data}
       } else {
          dispatch({ type: ERROR, data: { message: data?.data?.message, isopen: true, type: '' } });
-         return { data, success: false };
+         router.push('/studentHome');
       }
    } catch (error) {
       dispatch({ type: ERROR, data: { message: error.message, isopen: true, type: '' } });
+      router.push('/studentHome');
    }
 }
 

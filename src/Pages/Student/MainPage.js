@@ -1,14 +1,13 @@
 
 import React from 'react';
-import { Box, Grid, Container, Typography, Stack, Divider, Button } from '@mui/material';
+import { Box, Grid, Container, Typography, Divider, Button } from '@mui/material';
 import Page from '../../components/Page';
 import { UpcomingTest,TestMissed,OngoingTest,AppNewsUpdate,TodayTest, UpcomingTestTable, SubmittedTestTable  } from '../../components/student/main';
 import Navbar from '../../components/student/navbar/Navbar';
-import faker from 'faker';
 import { useHistory } from 'react-router-dom';
-import studentMain from '../../_mocks_/studentMain';
 import { useDispatch ,useSelector } from 'react-redux';
 import { StudentTestDetails } from '../../redux/actions/student/studentTest';
+
 
 
 
@@ -20,6 +19,17 @@ export default function DashboardApp() {
 
     React.useEffect(() => {
         dispatch(StudentTestDetails());
+    }, [])
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            dispatch(StudentTestDetails());
+        }, 60000)
+
+        return (() => {
+            clearInterval(timer);
+        })
+        
     }, [])
 
 
@@ -47,7 +57,7 @@ export default function DashboardApp() {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={3}>
-                    <TestMissed total={studentTest.missedTest.length}/>
+                    <TestMissed total={studentTest.missedTest}/>
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={12}>
@@ -63,11 +73,16 @@ export default function DashboardApp() {
                     }
 
                     {studentTest.ongoingTest.map((data, index) => (
-                        <AppNewsUpdate
-                        data = {data}
-                        index = {index}
-                        isbtn = {true}
-                        />
+                        <Box>
+                            {data.status && 
+                                <AppNewsUpdate
+                                data = {data}
+                                index = {index}
+                                isbtn = {true}
+                            />
+                            }
+                            
+                        </Box>
                     ))}
 
                 </Grid>
@@ -89,8 +104,8 @@ export default function DashboardApp() {
 
                 </Grid>
                 }
-                
 
+                <Container>
                 <Grid item xs={12} md={12} lg={12}>
                         <UpcomingTestTable isMain={true}/>
                         {studentTest.upcomingTest?.length > 0 &&
@@ -111,6 +126,8 @@ export default function DashboardApp() {
                         </Box>
                     }
                 </Grid>
+                </Container>
+                
         </Grid>
         </Container>
     </Page>

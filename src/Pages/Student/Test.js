@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { Box, Grid, Container, Typography, Stack, Button, Divider } from '@mui/material';
+import { Box, Grid, Container, Typography,  Button, Divider } from '@mui/material';
 import Page from '../../components/Page';
 import { MutipleCheck, SingleCheck } from '../../components/student/main';
-import newdata from '../../_mocks_/questiondata';
 import { useHistory, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { StudentAnswer, studentTest, submitTestAction } from '../../redux/actions/student/studentTest';
@@ -16,13 +15,8 @@ export default function DashboardApp() {
     const answers = useSelector((state) => state?.studentTestAnswer?.answer);
     const [test, settest] = React.useState(null);
     const [isloading, setLoading] = React.useState(true);
+    const [timeRemaining, settimeRemaining] = React.useState(0);
 
-    
-
-    const [timeRemaining, settimeRemaining] = React.useState(240);
-
-    const second = () => (new Date()).getUTCSeconds() % timeRemaining;
-    const [time, setTime] = React.useState(second);
 
     React.useEffect(() => {
         const unloadCallback = (event) => {
@@ -36,10 +30,16 @@ export default function DashboardApp() {
     }, []);
 
     const getTestDetails = async() => {
-        const data = await dispatch(studentTest(id));
+        const data = await dispatch(studentTest(id, history));
         if(data){
             settest(data?.data?.test);
-            dispatch(StudentAnswer(data?.data?.test));
+            dispatch(StudentAnswer(data?.data?.test, history));
+            
+            const nowTimeStamp = new Date().getTime()/1000; 
+            const endTime = data?.data?.test?.endTime;
+            const duration = Math.round((endTime - nowTimeStamp)/60);
+            settimeRemaining(duration);
+            
             setLoading(false);
         }
     }
@@ -48,24 +48,6 @@ export default function DashboardApp() {
         getTestDetails();
     }, [id]);
 
-
-    // React.useEffect(() => {
-    //     const timer = setInterval(() =>{
-    //         const nxttime = second();
-    //         setTime((prevTime) => {
-    //             if (prevTime > nxttime) {
-    //                 console.log('navigate');
-    //             }
-    //             return nxttime;
-    //         });
-    //     }, 1000)
-        
-    //     return (() => {
-    //         clearInterval(timer);
-    //     })
-    // }, [])
-
-
     const SubmitTest = () => {
         const date = new Date();
         const submitTime = date.getTime();
@@ -73,6 +55,32 @@ export default function DashboardApp() {
         const formData = { testId: id, submitTime: submitTime, endTime: test.endTime, answer: answers , totalMarks: test.totalMarks }
         dispatch(submitTestAction(formData, history));
     }
+
+
+    React.useEffect(() => {
+        var timer;
+
+        if(isloading == false){
+            console.log('time interval set')
+            timer = setInterval(() =>{
+                settimeRemaining((prev) => {
+                    if(prev - 1 <= 0){
+                        SubmitTest();
+                    }
+                    return prev-1;
+                });
+            }, 60000)
+        }
+
+        return (() => {
+            if(isloading == false){
+                clearInterval(timer);
+            }
+        })
+    }, [isloading])
+
+
+    
 
 return (
     <Page title={`Test | Student`}>
@@ -89,9 +97,9 @@ return (
             <Box sx={{ pt: 15, pb: 5, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Box>
                     <Typography className="noselect" variant="h4">{test?.title}</Typography>
-                    <Typography className="noselect" variant="h4">Total Marks: {test?.totalMarks}</Typography>
+                    <Typography className="noselect" variant="h4">Total Marks: {test?.totalMarks} mins</Typography>
                 </Box>
-                <Typography className="noselect" variant="h4">Time Remaining : {timeRemaining - time}</Typography>
+                <Typography className="noselect" variant="h4">Time Remaining : {timeRemaining}</Typography>
             </Box>
 
             <Divider />
