@@ -100,7 +100,7 @@ export default function NewTest() {
 
 
     const handleSubmit = () => {
-        if (!test.isBranchSpecific) test.section = null;
+        if (!test.isBranchSpecific) test.section = "null";
         if (!test.isduration) test.duration = null;
         let total = 0;
         questions.forEach((ques,index)=>{
